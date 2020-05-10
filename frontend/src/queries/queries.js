@@ -1,33 +1,30 @@
 import { gql } from 'apollo-boost';
 
 const jobs = gql`
-
-query {
-    jobs(companyId:"5e9eb47b24394e5e4883644c"){
+query jobs($companyId:String){
+    jobs(companyId: $companyId){
       title, posting_date,description
     }
-  
-
 `;
 
 const alljobs = gql`
-query {
+query alljobs(){
     alljobs{
       title, posting_date,description,companydetails{name}
     }
   
 `;
 const jobdetails = gql`
-query {
-    jobdetails(jobId:"5e9e6e234a66cf4eec41448a"){
+query jobdetails($jobId:String){
+    jobdetails(jobId:$jobId){
       title, posting_date,description,companydetails{name,email}
     }
   
 `;
 
 const company = gql`
-query {
-    company(companyId:"5e9eb47b24394e5e4883644c"){
+query company($companyId:String){
+    company(companyId:$companyId){
       name,email,location,description
     }
   }
@@ -35,8 +32,8 @@ query {
 `;
 
 const student = gql`
-query {
-    student(studentId:"5eb2ab62127c303c8c64a21c"){
+query student($studentId:String){
+    student(studentId:$studentId){
       name,email,college
     }
   }
@@ -44,7 +41,7 @@ query {
 `;
 
 const allStudents = gql`
-{
+query allStudents(){
     allStudents
     {
       name,email,college,_id
@@ -54,8 +51,8 @@ const allStudents = gql`
 `;
 
 const listAppliedJobs = gql`
-query {
-    listAppliedJobs(studentId:"5eb2ab62127c303c8c64a21c"){
+query listAppliedJobs($studentId:String){
+    listAppliedJobs(studentId:$studentId){
       _id,title,companydetails{name,email}
     }
   }
@@ -63,8 +60,8 @@ query {
 `;
 
 const listApplicants = gql`
-query {
-    listApplicants(jobId:"5e9e6e234a66cf4eec41448a"){
+query listApplicants($jobId:String){
+    listApplicants(jobId:$jobId){
       _id,title,location,salary,applications{studentId,status},
       listApplicants{_id,name,email}
     }

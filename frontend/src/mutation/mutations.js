@@ -1,28 +1,43 @@
 import { gql } from 'apollo-boost';
 
 const addJob = gql`
-mutation{
-    addJob(title: "test Job",
-     posting_date: "2020-04-30",
-     deadline: "2020-04-30",
-     location: "SanJose",
-     salary: "50",
-     description: "test job desc",
-     category: "Internship",
-       companyId:"5e9944d38ceab440c076bf63"){
-     
-     title,posting_date,deadline,location,salary,description,category
+mutation addJob(
+    $title:String,
+    $posting_date:String,
+    $deadline:String,
+    $location:String,
+    $salary:String,
+    $description:String,
+    $category:String,
+    $companyId:String){
+        addJob(
+        title: $title,
+        posting_date: $posting_date,
+        deadline: $deadline,
+        location: $location,
+        salary: $salary,
+        description: $description,
+        category: $category,
+        companyId:$companyId){
+            title,posting_date,deadline,location,salary,description,category
    }
    
  } 
 `;
 const addCompany = gql`
-mutation{
-    addCompany(name: "Tesla",
-     email: "tesla@gmail.com",
-     password: "tesla",
-     location: "SanJose",
-     description: "tesla car making company"){
+mutation addCompany(
+    $name:String,
+    $email:String,
+    $password:String,
+    $location:String,
+    $description:String
+){
+    addCompany(
+    name: $name
+     email: $email,
+     password: $password,
+     location: $location,
+     description: $description){
      email,location,description,name}
    
  }}
@@ -30,29 +45,43 @@ mutation{
 `;
 
 const updateCompany = gql`
-mutation{
-    updateCompany(name: "Infor",
-     email: "infor@gmail.com",
-     company_id: "5e9eb47b24394e5e4883644c",
-     location: "San Francisco",
-     description: "customization"){
-     email,location,description,name}
+mutation updateCompany(
+    $name:String,
+    $email:String,
+    $location:String,
+    $description:String,
+    $company_id:String){
+    updateCompany(
+        name: $name,
+        email: $email,
+        company_id: $company_id,
+        location: $location,
+        description: $description){
+            email,location,description,name}
    
  }
  
 `;
 
 const addStudent = gql`
-mutation{
-    addStudent(name: "Sreeja",
-     email: "sreeja@gmail.com",
-     password: "sreeja",
-     college: "SJSU")
-     {
-     name,email,college}  
- }
- 
-`;
+mutation addStudent(
+    $name:String,
+    $email:String,
+    $password:String,
+    $college:String
+)
+{
+        addStudent(
+        name: $name,
+        email: $email,
+        password: $password,
+        college: $college)
+        {
+            name,email,college
+        }  
+        
+}
+ `;
 
 // const updateStudent = gql`
 // mutation{
@@ -73,39 +102,56 @@ mutation{
 // `;
 
 const updateStudentCareer = gql`
-mutation{
-    updateStudent( 
-         career_objective:"abec",
-         id:"5eb2ab62127c303c8c64a21c",
-   type:"career"){
-     name,email,college,dob,career_objective}
+mutation updateStudent( 
+    $career_objective:String,
+    $id:String
+){
+        updateStudent( 
+            career_objective:$career_objective,
+            id:$id,
+            type:"career"){
+                name,email,college,dob,career_objective}
    
  }
  
 `;
 
 const updateStudentBasic = gql`
-mutation{
+mutation updateStudent( 
+    $name:String,
+    $email:String,
+    $college:String,
+    $dob:String,
+    $state:String,
+    $city:String,
+    $country:String,
+    $id:String){
+
     updateStudent( 
-         name:"abec",
-     dob:"02022019",
-     city:"sanjose",
-     state:"ca",
-     country:"aaa",
-         id:"5eb2ab62127c303c8c64a21c",
-   type:"basic"){
-     name,email,college,dob,state,city,country,career_objective}
- 
+        name:$name,
+        email:$email,
+        college:$college,
+        dob:$dob
+        state:$state,
+        city:$city,
+        country:$country,
+        id:$id,
+        type:"basic"){
+        name,email,college,dob,state,city,country,career_objective}
     }
 `;
 
 
 const updateStudentEducation = gql`
-mutation{
+mutation (
     updateStudentEducation( 
-         degree:"mtech",
-         id:"5eb2ab62127c303c8c64a21c",
-   type:"education"){
+        $degree:String,
+        $id:String
+){
+    updateStudentEducation( 
+        degree:$degree,
+        id:$id,
+        type:"education"){
      name,email,college,dob,state,city,country,career_objective,
      education{degree}}
    
@@ -113,12 +159,16 @@ mutation{
  
 `;
 const updateStudentExperience = gql`
-mutation{
+mutation updateStudentExperience(
+    $company:String,
+    $title:String,
+    $id:String
+){
     updateStudentExperience( 
-         company:"infor",
-     title:"developer",
-         id:"5eb2ab62127c303c8c64a21c",
-   type:"experience"){
+    company:$company,
+    title:$title,
+    id:$id,
+    type:"experience"){
      name,email,college,dob,state,city,country,career_objective,
      education{degree},experience{company,title}}
    
@@ -127,22 +177,28 @@ mutation{
 `;
 
 const applyJob = gql`
-mutation{
+mutation applyJob( 
+    $job_id:String,
+    $stud_id:String,
+    $app_date:String){
     applyJob( 
-         job_id:"5e9e6e234a66cf4eec41448a",
-         stud_id:"5eb2ab62127c303c8c64a21c",
-   app_date:"11/17/2017"){
-     title,posting_date,deadline,location,salary,category,
-     applications{studentId,status,appliedDate}}
+        job_id:$job_id,
+        stud_id:$stud_id,
+        app_date:$app_date){
+        title,posting_date,deadline,location,salary,category,
+        applications{studentId,status,appliedDate}}
  }
  
 `;
 const changeJobStatus = gql`
-mutation{
+mutation changeJobStatus( 
+    $jobId:String,
+    $studentId:String,
+    $status:String){
     changeJobStatus( 
-         jobId:"5e9e6e234a66cf4eec41448a",
-         studentId:"5eb2ab62127c303c8c64a21c",
-     status:"Approved"
+        jobId:$jobId,
+        studentId:$studentId,
+        status:$status
    ){
      title,posting_date,deadline,location,salary,category,
      applications{studentId,status,appliedDate}} 
