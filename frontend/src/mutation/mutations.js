@@ -1,66 +1,153 @@
 import { gql } from 'apollo-boost';
 
-const addCustomerMutation = gql`
-    mutation AddCustomer($name: String, $email_id: String, $password: String, $address: String, $phone_number: String){
-        addCustomer(name: $name, email_id: $email_id, password: $password, address: $address, phone_number: $phone_number){
-            message
-            status
-        }
+const addJob = gql`
+mutation{
+    addJob(title: "test Job",
+     posting_date: "2020-04-30",
+     deadline: "2020-04-30",
+     location: "SanJose",
+     salary: "50",
+     description: "test job desc",
+     category: "Internship",
+       companyId:"5e9944d38ceab440c076bf63"){
+     
+     title,posting_date,deadline,location,salary,description,category
+   }
+   
+ } 
+`;
+const addCompany = gql`
+mutation{
+    addCompany(name: "Tesla",
+     email: "tesla@gmail.com",
+     password: "tesla",
+     location: "SanJose",
+     description: "tesla car making company"){
+     email,location,description,name}
+   
+ }}
+ 
+`;
+
+const updateCompany = gql`
+mutation{
+    updateCompany(name: "Infor",
+     email: "infor@gmail.com",
+     company_id: "5e9eb47b24394e5e4883644c",
+     location: "San Francisco",
+     description: "customization"){
+     email,location,description,name}
+   
+ }
+ 
+`;
+
+const addStudent = gql`
+mutation{
+    addStudent(name: "Sreeja",
+     email: "sreeja@gmail.com",
+     password: "sreeja",
+     college: "SJSU")
+     {
+     name,email,college}  
+ }
+ 
+`;
+
+// const updateStudent = gql`
+// mutation{
+//     updateStudent(  name: "sreeja",
+//          email: "sreeja@gmail.com",
+//          college: "sreeja",
+//          dob: "sreeja",
+//          city: "sreeja",
+//          state: "sreeja",
+//          country: "sreeja",
+//          career_objective:"abc",
+//          id:"5eb2ab62127c303c8c64a21c",
+//    type:"career"){
+//      name,email,college,dob,career_objective}
+   
+//  }
+ 
+// `;
+
+const updateStudentCareer = gql`
+mutation{
+    updateStudent( 
+         career_objective:"abec",
+         id:"5eb2ab62127c303c8c64a21c",
+   type:"career"){
+     name,email,college,dob,career_objective}
+   
+ }
+ 
+`;
+
+const updateStudentBasic = gql`
+mutation{
+    updateStudent( 
+         name:"abec",
+     dob:"02022019",
+     city:"sanjose",
+     state:"ca",
+     country:"aaa",
+         id:"5eb2ab62127c303c8c64a21c",
+   type:"basic"){
+     name,email,college,dob,state,city,country,career_objective}
+ 
     }
 `;
 
-const addOwnerMutation = gql`
-    mutation AddOwner($name: String, $email_id: String, $password: String, $address: String, $phone_number: String, $res_name: String, $res_cuisine: String, $res_zip_code: String){
-        addOwner(name: $name, email_id: $email_id, password: $password, address: $address, phone_number: $phone_number, res_name: $res_name, res_cuisine: $res_cuisine, res_zip_code: $res_zip_code){
-            message
-            status
-        }
-    }
+
+const updateStudentEducation = gql`
+mutation{
+    updateStudentEducation( 
+         degree:"mtech",
+         id:"5eb2ab62127c303c8c64a21c",
+   type:"education"){
+     name,email,college,dob,state,city,country,career_objective,
+     education{degree}}
+   
+ }
+ 
+`;
+const updateStudentExperience = gql`
+mutation{
+    updateStudentExperience( 
+         company:"infor",
+     title:"developer",
+         id:"5eb2ab62127c303c8c64a21c",
+   type:"experience"){
+     name,email,college,dob,state,city,country,career_objective,
+     education{degree},experience{company,title}}
+   
+ }
+ 
 `;
 
-const loginMutation = gql`
-    mutation login($email_id: String, $password: String){
-        login(email_id: $email_id, password: $password){
-            message
-            status
-        }
-    }
+const applyJob = gql`
+mutation{
+    applyJob( 
+         job_id:"5e9e6e234a66cf4eec41448a",
+         stud_id:"5eb2ab62127c303c8c64a21c",
+   app_date:"11/17/2017"){
+     title,posting_date,deadline,location,salary,category,
+     applications{studentId,status,appliedDate}}
+ }
+ 
+`;
+const changeJobStatus = gql`
+mutation{
+    changeJobStatus( 
+         jobId:"5e9e6e234a66cf4eec41448a",
+         studentId:"5eb2ab62127c303c8c64a21c",
+     status:"Approved"
+   ){
+     title,posting_date,deadline,location,salary,category,
+     applications{studentId,status,appliedDate}} 
+ }
+ 
 `;
 
-const updateCustomerMutation = gql`
-    mutation updateCustomer($name: String, $email_id: String, $password: String, $address: String, $phone_number: String){
-        updateCustomer(name: $name, email_id: $email_id, password: $password, address: $address, phone_number: $phone_number){
-            message
-            status
-        }
-    }
-`;
-
-const updateOwnerMutation = gql`
-    mutation updateOwner($name: String, $email_id: String, $password: String, $address: String, $phone_number: String, $res_name: String, $res_cuisine: String, $res_zip_code: String){
-        updateOwner(name: $name, email_id: $email_id, password: $password, address: $address, phone_number: $phone_number, res_name: $res_name, res_cuisine: $res_cuisine, res_zip_code: $res_zip_code){
-            message
-            status
-        }
-    }
-`;
-
-const addMenuSectionMutation = gql`
-    mutation addMenuSection($user_id: String, $menu_section_name: String){
-        addMenuSection(user_id: $user_id, menu_section_name: $menu_section_name){
-            message
-            status
-        }
-    }
-`;
-
-const addMenuItemMutation = gql`
-    mutation addMenuItem($user_id: String, $menu_section_name: String, $item_name: String, $item_description: String, $item_price: String){
-        addMenuItem(user_id: $user_id, menu_section_name: $menu_section_name, item_name: $item_name, item_description: $item_description, item_price: $item_price){
-            message
-            status
-        }
-    }
-`;
-
-export {addCustomerMutation, addOwnerMutation, loginMutation, updateCustomerMutation, updateOwnerMutation, addMenuSectionMutation, addMenuItemMutation};
+export {changeJobStatus,applyJob,addJob,addCompany,updateCompany,addStudent,updateStudentCareer,updateStudentBasic,updateStudentEducation,updateStudentExperience};
