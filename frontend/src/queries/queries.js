@@ -3,7 +3,7 @@ import { gql } from 'apollo-boost';
 const jobs = gql`
 query jobs($companyId:String){
     jobs(companyId: $companyId){
-      title, posting_date,description,location,deadline,salary,category
+      _id,title, posting_date,description,location,deadline,salary,category
     }
   }
 `;
@@ -26,7 +26,7 @@ query jobdetails($jobId:String){
 const company = gql`
 query company($companyId:String){
     company(companyId:$companyId){
-      name,email,location,description
+      _id,name,email,location,description
     }
   }
   

@@ -59,6 +59,7 @@ class Home extends Component {
 
 
     viewApplicants = (e) => {
+        console.log(e.target.value)
         this.setState({
             view_applicants: true,
             editJob:e.target.value
