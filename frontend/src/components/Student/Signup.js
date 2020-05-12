@@ -3,7 +3,10 @@ import '../../App.css';
 import axios from 'axios';
 import {Redirect} from 'react-router';
 import {Link} from 'react-router-dom';
-import {environment} from '../../Utils/constants';
+// import {environment} from '../../Utils/constants';
+import { graphql, compose, withApollo } from 'react-apollo';
+
+import { addStudent } from '../../mutation/mutations';
 
  
 class Signup extends Component{
@@ -26,36 +29,46 @@ class Signup extends Component{
             [e.target.name]: e.target.value
         })
     }
-    submitSignup = (e) => {
+    submitSignup = async(e) => {
         var headers = new Headers();
         e.preventDefault();
-        const data = {
-            name : this.state.name,
-            email: this.state.email,
-            password : this.state.password,
-            college: this.state.college
-        }
-        axios.defaults.withCredentials = true;
-        console.log("in frontend before axios");
-        axios.post(environment.baseUrl+'/student/student_signup',data)
-            .then(response => {
-              console.log("in frontend after response");
-              console.log("response" + response.data.result)
-              if (response.data.result) {
+        // const data = {
+        //     name : this.state.name,
+        //     email: this.state.email,
+        //     password : this.state.password,
+        //     college: this.state.college
+        // }
+        let response = await this.props.client.mutate({
+            mutation: addStudent,
+            variables: {
+                name : this.state.name,
+                email: this.state.email,
+                password : this.state.password,
+                college: this.state.college
+            }
+        })
+        response = response.data.addStudent;
+        // axios.defaults.withCredentials = true;
+        // console.log("in frontend before axios");
+        // axios.post('/student/student_signup',data)
+            // .then(response => {
+            //   console.log("in frontend after response");
+              console.log("response" + response._id)
+              if (response._id) {
                   this.setState({
                     signed: true
                   })
-              } else if (response.data.error) {
+              } else{
                   this.setState({
                     signed: false
                   })
               }       
-            })
-            .catch(
-                this.setState({
-                    signed: false
+            // })
+            // .catch(
+            //     this.setState({
+            //         signed: false
                 
-            }));          
+            // }));          
     }
 
     render(){
@@ -92,4 +105,5 @@ class Signup extends Component{
         )
     }
 }
-export default Signup;
+// export default Signup;
+export default withApollo(Signup)

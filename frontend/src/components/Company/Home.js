@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import axios from 'axios';
 import { Redirect } from 'react-router';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import {environment} from '../../Utils/constants';
 import TablePagination from '@material-ui/core/TablePagination';
-import { connect } from "react-redux";
-import { fetchCompanyJobs } from "../../redux/actions/index";
+import { withApollo } from 'react-apollo';
+import { jobs } from '../../queries/queries';
+
+
 
 class Home extends Component {
     constructor(props) {
         super(props);
-        let cmpny_id = sessionStorage.getItem('id');
+        let cmpny_id = sessionStorage.getItem('companyId');
         this.state = {
             title: "",
             posting_date: "",
@@ -66,11 +66,12 @@ class Home extends Component {
     }
 
     componentDidMount() {   
-        const data = {
-            companyId: this.state.companyId
-        }
-        console.log(data)
-        this.props.fetchCompanyJobs(data);
+        // const data = {
+        //     companyId: this.state.companyId
+        // }
+        // console.log(data)
+      this.fetchJobs()
+        // this.props.fetchCompanyJobs(data);
 
         // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
 
@@ -95,6 +96,29 @@ class Home extends Component {
         //     })
     }
 
+    fetchJobs=async()=>{
+
+        const { data } = await this.props.client.query({
+            query: jobs,
+            variables: { companyId: sessionStorage.getItem("companyId") },
+            fetchPolicy: 'no-cache'
+        })
+        console.log(data)
+        if (data) {
+            this.setState({
+                dataRetrieved: true,
+                jobData: data.jobs
+            });
+            
+
+
+        } else {
+            console.log("error")
+
+        }
+
+    }
+
 
     render() {
         let renderRedirect = null;
@@ -104,7 +128,7 @@ class Home extends Component {
         if (this.state.view_applicants === true) {
             renderRedirect = <Redirect to={`/ViewApplicants/${this.state.editJob}`}/>
         }
-        let jobData = this.props.jobData;
+        let jobData = this.state.jobData;
         console.log(jobData)
         return (
             <div>
@@ -120,7 +144,8 @@ class Home extends Component {
                             </div>
                            
                                 <div>
-                                {jobData.length?jobData.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((data, index) => {
+
+                                {jobData?jobData.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((data, index) => {
 
                                     // {jobData.map((data, index) => {
                                         
@@ -150,7 +175,7 @@ class Home extends Component {
                     <div class="col-md-4">
                         <TablePagination
                             rowsPerPageOptions={[5]}
-                            count={this.props.jobData.length}
+                            count={this.state.jobData.length}
                             page={this.state.page}
                             rowsPerPage={this.state.rowsPerPage}
                             onChangePage={this.handleChangePage}
@@ -158,7 +183,7 @@ class Home extends Component {
                     </div>  <div class="col-md-4"></div>
                 </div>
 
-                                </div>
+                        </div>
                           
                         </div>
                     </div>
@@ -168,20 +193,22 @@ class Home extends Component {
     }
 }
 // export default Home;
-const mapStateToProps = state => {
-    console.log(state.allCompanyJobs)
+export default withApollo(Home)
+
+// const mapStateToProps = state => {
+//     console.log(state.allCompanyJobs)
     
-    return {
+//     return {
 
-        jobData:state.allCompanyJobs
+//         jobData:state.allCompanyJobs
 
-    };
-  };
+//     };
+//   };
   
-  function mapDispatchToProps(dispatch) {
-    return {
-      fetchCompanyJobs: payload => dispatch(fetchCompanyJobs(payload))
-    };
-  }
+//   function mapDispatchToProps(dispatch) {
+//     return {
+//       fetchCompanyJobs: payload => dispatch(fetchCompanyJobs(payload))
+//     };
+//   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Home);
+//   export default connect(mapStateToProps, mapDispatchToProps)(Home);

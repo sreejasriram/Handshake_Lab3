@@ -1,8 +1,14 @@
 const query =require('../Database/queries');
 const Company = require('../Models/CompanyModel');
 var ObjectId = require('mongodb').ObjectID;
+const passwordHash = require('password-hash');
 
 const addCompany = async(company_details)=>{
+        let hashedPassword;
+        if (company_details.password)
+            hashedPassword = passwordHash.generate(company_details.password);
+
+        company_details.password = hashedPassword
         console.log(company_details)
         try{
             return await query.saveDocuments(Company.createModel(),company_details,{runValidators:false})
@@ -17,7 +23,6 @@ const updateCompany = async(profile)=>{
     const update_data = {
         name: profile.name,
         location: profile.location,
-        email: profile.email,
         description: profile.description,
     }
     console.log(update_data)

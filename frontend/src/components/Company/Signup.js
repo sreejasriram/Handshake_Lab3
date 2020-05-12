@@ -2,7 +2,11 @@ import React, {Component} from 'react';
 import '../../App.css';
 import axios from 'axios';
 import {Redirect} from 'react-router';
-import {environment} from '../../Utils/constants';
+// import {environment} from '../../Utils/constants';
+import { graphql, compose, withApollo } from 'react-apollo';
+// import { addCompany } from '../../queries/queries';
+import { addCompany } from '../../mutation/mutations';
+
 
 class Signup extends Component{
     constructor(props){
@@ -23,44 +27,53 @@ class Signup extends Component{
             [e.target.name]: e.target.value
         })
     }
-    submitSignup = (e) => {
+    submitSignup = async(e) => {
         e.preventDefault();
-        const data = {
+        // const data = {
+        //     name : this.state.name,
+        //     email: this.state.email,
+        //     password : this.state.password,
+        //     location: this.state.location 
+        // }
+        let response = await this.props.client.mutate({
+            mutation: addCompany,
+            variables: {
             name : this.state.name,
             email: this.state.email,
             password : this.state.password,
             location: this.state.location 
-        }
-        axios.defaults.withCredentials = true;
-        console.log("in frontend before axios");
-        axios.post(environment.baseUrl+'/company/company_signup',data)
-            .then(response => {
+            }
+        })
+        response = response.data.addCompany;
+
+        // axios.defaults.withCredentials = true;
+        // console.log("in frontend before axios");
+        // axios.post('/company/company_signup',data)
+            // .then(response => {
               //  console.log("Status Code : ",response.status);
 
               console.log("in frontend after response");
 
-              console.log("response" + response.data.result)
-              if (response.data.result) {
+              console.log(response)
+              if (response._id) {
                   this.setState({
                     signed: true
-
                   })
-                  //console.log("response" + response.data.result)
 
 
-              } else if (response.data.error) {
+              } else {
                   this.setState({
                     signed: false
                   })
               }
 
                 
-            })
-            .catch(
-                this.setState({
-                    signed: false
+            // })
+            // .catch(
+            //     this.setState({
+            //         signed: false
                 
-            }));
+            // }));
           
             
 
@@ -111,4 +124,5 @@ class Signup extends Component{
     }
 }
 //export Login Component
-export default Signup;
+// export default Signup;
+export default withApollo(Signup)

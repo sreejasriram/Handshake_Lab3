@@ -16,18 +16,19 @@ class NavbarPage extends Component {
 
     }
     handleLogout = () => {
-        if (cookie.load('company')) {
-            cookie.remove('company', { path: '/' })
-            // sessionStorage.removeItem("token");
+        
+        if (sessionStorage.getItem('companyId')) {
+            // cookie.remove('company', { path: '/' })
+            sessionStorage.removeItem("companyId");
             // sessionStorage.removeItem("id");
             // sessionStorage.removeItem("username");
 
 
 
         }
-        else if (cookie.load('student')) {
-            cookie.remove('student', { path: '/' })
-            // sessionStorage.removeItem("token");
+        else if (sessionStorage.getItem('studentId')) {
+            // cookie.remove('student', { path: '/' })
+            sessionStorage.removeItem("studentId");
             // sessionStorage.removeItem("id");
             // sessionStorage.removeItem("username");
 
@@ -42,7 +43,7 @@ class NavbarPage extends Component {
         let navHeader = null;
         let navUpdate = null;
         let redirectVar = null;
-        if (cookie.load('company')) {
+        if (sessionStorage.getItem('companyId')) {
             console.log("Able to read company cookie");
 
 /////////////////////////////////////
@@ -56,9 +57,9 @@ navUpdate = (
     <div>
         <ul class="nav navbar-nav navbar-right">
             <li class = 'navli'><Link to="/Home">Jobs</Link></li>
-            <li class='navli'><Link to="/events">Events</Link></li>
+            {/* <li class='navli'><Link to="/events">Events</Link></li> */}
             <li class='navli'><Link to="/students">Students</Link></li>
-            <li class='navli'><Link to="/companyMessages">Messages</Link></li>          
+            {/* <li class='navli'><Link to="/companyMessages">Messages</Link></li>           */}
             <li class='navli'><Link to="/profile">Profile</Link></li>
             <li class='navli'><Link to="/" onClick = {this.handleLogout}><span class="glyphicon glyphicon-user"></span>Logout</Link></li> 
         </ul>
@@ -81,7 +82,7 @@ navUpdate = (
             // );
             /////////////////////////////////////////
         }
-        else if (cookie.load('student')) {
+        else if (sessionStorage.getItem('studentId')) {
             console.log("Able to read student cookie");
 
 //////////////////////////////////
@@ -96,10 +97,10 @@ navUpdate = (
     // </navitem>,
     <navitem class="nav navbar-nav navbar-right">
             <li class='navli'><Link to="/studJobs">Jobs</Link></li>
-            <li class='navli'><Link to="/companyevents">Events</Link></li>
+            {/* <li class='navli'><Link to="/companyevents">Events</Link></li> */}
             {/* <li class='navli'><Link to="/applications">Applications</Link></li> */}
             <li class='navli'><Link to="/HandshakeStudents">Students</Link></li>
-            <li class='navli'><Link to="/messages">Messages</Link></li>
+            {/* <li class='navli'><Link to="/messages">Messages</Link></li> */}
             <li class='navli'><Link to="/studprofile">Profile</Link></li>
             <li class='navli'><Link to="/" onClick = {this.handleLogout}><span class="glyphicon glyphicon-user"></span>Logout</Link></li>
     </navitem>

@@ -17,7 +17,7 @@ class StudentNavbar extends Component {
     }
     render(){
         let navUpdate = null;
-        if(cookie.load('student')){
+        if(sessionStorage.getItem('studentId')){
             if(this.props.comp === "jobapplications")
             {
                 navUpdate = (

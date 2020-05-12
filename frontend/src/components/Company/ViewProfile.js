@@ -6,7 +6,7 @@ import { Redirect } from 'react-router';
 import { Card, Avatar } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { environment } from '../../Utils/constants';
+// import { environment } from '../../Utils/constants';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import CakeOutlinedIcon from '@material-ui/icons/CakeOutlined';
@@ -19,8 +19,11 @@ import GradeOutlinedIcon from '@material-ui/icons/GradeOutlined';
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import emptyPic from '../../images/empty-profile-picture.png';
-import { connect } from "react-redux";
-import { viewStudentProfile,sendmessage } from "../../redux/actions/index";
+import { withApollo } from 'react-apollo';
+import { student } from '../../queries/queries';
+
+// import { connect } from "react-redux";
+// import { viewStudentProfile,sendmessage } from "../../redux/actions/index";
 
 
 class ViewProfile extends Component {
@@ -67,12 +70,9 @@ class ViewProfile extends Component {
             emptyprofilepic:emptyPic,
 
         }
-        this.messageStudent = this.messageStudent.bind(this);
+        // this.messageStudent = this.messageStudent.bind(this);
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
-        this.sendMessage = this.sendMessage.bind(this);
-
-
-
+        // this.sendMessage = this.sendMessage.bind(this);
 
     }
 
@@ -80,13 +80,13 @@ class ViewProfile extends Component {
 
 
 
-    messageStudent = (studentId) => {
-        console.log(studentId)
-        this.setState(currentState => ({
-            messagestudent: !currentState.messagestudent,
-            currentstudentId: studentId
-        }))
-    }
+    // messageStudent = (studentId) => {
+    //     console.log(studentId)
+    //     this.setState(currentState => ({
+    //         messagestudent: !currentState.messagestudent,
+    //         currentstudentId: studentId
+    //     }))
+    // }
 
     inputChangeHandler = (e) => {
         const value = e.target.value
@@ -97,68 +97,69 @@ class ViewProfile extends Component {
 
 
 
-    sendMessage = () => {
-        // e.preventDefault();
-        let currentdate = new Date()
+    // sendMessage = () => {
+    //     // e.preventDefault();
+    //     let currentdate = new Date()
 
-        const dtf = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' })
-        const [{ value: mo }, , { value: da }, , { value: ye }] = dtf.formatToParts(currentdate)
+    //     const dtf = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' })
+    //     const [{ value: mo }, , { value: da }, , { value: ye }] = dtf.formatToParts(currentdate)
 
-        let datestr = mo + " " + da + " " + ye + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds()
+    //     let datestr = mo + " " + da + " " + ye + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds()
 
-        let data = null
-        data = {
-            id1: sessionStorage.getItem('id'),
-            id2: this.state.stud_id,
-            update: {
-                id1: {
-                    sender: sessionStorage.getItem('id'),
-                    persona: "companies"
-                },
-                id2: {
-                    receiver: this.state.stud_id,
-                    persona: "students"
-                },
-                $push: {
-                    messages: [{
-                        fromId: sessionStorage.getItem('id'),
-                        message: this.state.mess,
-                        dateTime: datestr
-                        // dateTime: currentdate.getDay() + " " + currentdate.getMonth() + " " + currentdate.getDate() + " " + currentdate.getFullYear() + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds()
-                    }]
-                }
-            }
-        }
+    //     let data = null
+    //     data = {
+    //         id1: sessionStorage.getItem('id'),
+    //         id2: this.state.stud_id,
+    //         update: {
+    //             id1: {
+    //                 sender: sessionStorage.getItem('id'),
+    //                 persona: "companies"
+    //             },
+    //             id2: {
+    //                 receiver: this.state.stud_id,
+    //                 persona: "students"
+    //             },
+    //             $push: {
+    //                 messages: [{
+    //                     fromId: sessionStorage.getItem('id'),
+    //                     message: this.state.mess,
+    //                     dateTime: datestr
+    //                     // dateTime: currentdate.getDay() + " " + currentdate.getMonth() + " " + currentdate.getDate() + " " + currentdate.getFullYear() + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds()
+    //                 }]
+    //             }
+    //         }
+    //     }
 
-        console.log(data)
-        this.props.sendmessage(data);
+    //     console.log(data)
+    //     this.props.sendmessage(data);
 
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
+    //     // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
 
-        // axios.post(environment.baseUrl + '/company/send_message', data)
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data)
-        //         if (response.data) {
-        //             // <Redirect to={`/companyMessages/${this.state.studId}`} />
-        //             this.setState({ redirectToMessages: true })
+    //     // axios.post(environment.baseUrl + '/company/send_message', data)
+    //     //     .then(response => {
+    //     //         console.log("in frontend after response");
+    //     //         console.log(response.data)
+    //     //         if (response.data) {
+    //     //             // <Redirect to={`/companyMessages/${this.state.studId}`} />
+    //     //             this.setState({ redirectToMessages: true })
 
 
-        //         } else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-        //         }
-        //     }
-        //     )
-    }
+    //     //         } else if (response.data.error) {
+    //     //             console.log("response" + response.data.error)
+    //     //         }
+    //     //     }
+    //     //     )
+    // }
 
 
 
     componentDidMount() {
-        const data = {
-            id: this.state.stud_id
-        }
-        console.log(data)
-        this.props.viewStudentProfile(data);
+        // const data = {
+        //     id: this.state.stud_id
+        // }
+        // console.log(data)
+        this.fetchStudentProfile(this.state.stud_id)
+        // this.props.viewStudentProfile(data);
 
         // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
 
@@ -190,18 +191,37 @@ class ViewProfile extends Component {
         //         }
         //     })
     }
+    fetchStudentProfile=async(id)=>{
+        const { data } = await this.props.client.query({
+            query: student,
+            variables: { studentId: id},
+            fetchPolicy: 'no-cache'
+        })
+        console.log(data)
+        if(data){
+        if (data.student) {
+                this.setState({
+                    dataRetrieved: true,
+                    profileData: data.student 
+                });
+            } else {
+                console.log("error"+data)
+            }
+    
+
+    }}
 
 
     render() {
-        let profileData = this.props.profileData;
+        let profileData = this.state.profileData;
         console.log(profileData)
         let renderRedirect = null;
-        let k = null
-        if (this.props.redirectToMessages)
-            k = <Redirect to={`/companyMessages/`} />
+        // let k = null
+        // if (this.props.redirectToMessages)
+        //     k = <Redirect to={`/companyMessages/`} />
 
-        if (profileData.length > 0) {
-            profileData = profileData[0]
+        if (profileData) {
+            // profileData = profileData[0]
             renderRedirect =
                 <div>
                     <div class="row">
@@ -213,9 +233,9 @@ class ViewProfile extends Component {
                                 <center>
                                     <div class="row">
                                         {/* <div class="col-md-10"> */}
-                                          <Avatar src={profileData.image?profileData.image:this.state.emptyprofilepic} style={{ width: '104px', height: '104px', borderRadius: '50%', textAlign: 'center' }}></Avatar>
+                                          <Avatar src={this.state.emptyprofilepic} style={{ width: '104px', height: '104px', borderRadius: '50%', textAlign: 'center' }}></Avatar>
                                             <Typography color="black" gutterBottom>
-                                                <h4><b>{profileData.name.length?profileData.name:""}</b></h4>
+                                                <h4><b>{profileData.name?profileData.name:""}</b></h4>
                                             </Typography>
                                         {/* </div> */}
 
@@ -225,35 +245,14 @@ class ViewProfile extends Component {
                                     
                                     <p>{this.state.education.length?this.state.education[0].degree:""} {this.state.education.length?this.state.education[0].major:""} </p>
                                      {this.state.education.length?(<div>CGPA:{this.state.education[0].cgpa}</div>):<div></div>}  */}
-                                    <p>{profileData.college.length?profileData.college:""}</p>
-                                    <p>{profileData.education.length?profileData.education[0].degree:""} {profileData.education.length?profileData.education[0].major:""} </p>
-                                     {profileData.education.length?(<div>CGPA:{profileData.education[0].cgpa}</div>):<div></div>} 
+                                    <p>{profileData.college?profileData.college:""}</p>
+                                    <p>{profileData.education?profileData.education.degree:""} {profileData.education?profileData.education.major:""} </p>
+                                     {profileData.education?(<div>CGPA:{profileData.education.cgpa}</div>):<div></div>} 
 
-                                     <button class="btn btn-primary" style={{ backgroundColor: '#1569E0', border: '0px',width:'100%'}} onClick={() => this.messageStudent()}>Message</button>
+                                     {/* <button class="btn btn-primary" style={{ backgroundColor: '#1569E0', border: '0px',width:'100%'}} onClick={() => this.messageStudent()}>Message</button> */}
                                     </center>
 
-                                    <Dialog
-                                                aria-labelledby="simple-modal-title"
-                                                aria-describedby="simple-modal-description"
-                                                open={this.state.messagestudent}>
-                                                <div>
-                                                <b> <h4 id="simple-modal-title" style={{ padding: '10px'}}>Message</h4></b>
-                                                    <DialogContent style={{ width: '400px', height: '200px' }}>
-                                                        <textarea type="text" name="mess" onChange={this.inputChangeHandler} placeholder="Type your message here.." rows="4" cols="50" style={{resize:'none',borderRadius:'1px'}}/>
-                                                       
-                                                            <div class='row'>
-                                                            <div className='col-md-6'></div>
-                                                            <div className='col-md-2'>
-                                                       
-                                                                <button onClick={() => { this.sendMessage() }} class="btn btn-primary" style={{ backgroundColor: '#1569E0', borderRadius: '5px',margin:'5px',padding:'5px' }}>send</button><br /><br />
-                                                                </div>  <div className='col-md-2'>
-                                                                <button onClick={() => { this.messageStudent() }} class="btn btn-primary" style={{ backgroundColor: '#1569E0', borderRadius: '5px',margin:'5px',padding:'5px' }}>cancel</button>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </DialogContent>
-                                                </div>
-                                            </Dialog>
+                                   
                                 </CardContent>
                             </Card>
 
@@ -295,7 +294,7 @@ class ViewProfile extends Component {
 
                                     </div>
                                     {/* <p>{this.state.skills?this.state.skills:""}</p> */}
-                                    <p> {profileData.skills?profileData.skills:""}</p>
+                                    <p> C,Java,Angular Js</p>
 
                                 </CardContent>
                             </Card>
@@ -334,20 +333,21 @@ class ViewProfile extends Component {
 
                                     </div>
                                     {/* {this.state.education.map((data, index) => { */}
-                                    {profileData.education.map((data, index) => {
+                                    {/* {profileData.education.map((data, index) => { */}
 
-                                        return (
+                                        {/* return ( */}
                                             <div>
-                                        {data.college_name?(<div><b><SchoolRoundedIcon></SchoolRoundedIcon> {data.college_name}</b></div>):<div></div>} 
-                                        {data.degree?(<div><GradeOutlinedIcon></GradeOutlinedIcon> {data.degree}</div>):<div></div>} 
-                                        <div> {data.year_of_starting?data.year_of_starting:""}/{data.month_of_starting?data.month_of_starting:""}-{data.year_of_passing?data.year_of_passing:""}/{data.month_of_passing?data.month_of_passing:""}</div>
-                                        {data.major?(<div><b>Major in</b> {data.major}</div>):<div></div>} 
-                                        {data.cgpa?(<div><b>Cummulative GPA</b> {data.cgpa}</div>):<div></div>} 
+                                        {profileData.college_name?(<div><b><SchoolRoundedIcon></SchoolRoundedIcon> {profileData.college_name}</b></div>):<div></div>} 
+                                        {profileData.degree?(<div><GradeOutlinedIcon></GradeOutlinedIcon> {profileData.degree}</div>):<div></div>} 
+                                        <div> {profileData.year_of_starting?profileData.year_of_starting:""}/{profileData.month_of_starting?profileData.month_of_starting:""}-{profileData.year_of_passing?profileData.year_of_passing:""}/{profileData.month_of_passing?profileData.month_of_passing:""}</div>
+                                        {profileData.major?(<div><b>Major in</b> {profileData.major}</div>):<div></div>} 
+                                        {profileData.cgpa?(<div><b>Cummulative GPA</b> {profileData.cgpa}</div>):<div></div>} 
 
                                         
                                             <hr/>
-                                            </div>)
-                                    })}
+                                            </div>
+                                            {/* ) */}
+                                    {/* })} */}
 
                                 </CardContent>
                             </Card>
@@ -366,19 +366,20 @@ class ViewProfile extends Component {
 
                                     </div>
                                     {/* {this.state.experience.map((data, index) => { */}
-                                    {profileData.experience.map((data, index) => {
+                                    {/* {profileData.experience.map((data, index) => { */}
 
-                                        return (
+                                        {/* return ( */}
                                             <div>
-                                        {data.company?(<div> <h4><b><WorkOutlineOutlinedIcon></WorkOutlineOutlinedIcon> {data.company}</b></h4></div>):<div></div>} 
-                                        {data.title?(<div><PersonOutlinedIcon></PersonOutlinedIcon> {data.title}</div>):<div></div>} 
-                                        {data.location?(<div><LocationOnOutlinedIcon></LocationOnOutlinedIcon> {data.location}</div>):<div></div>} 
-                                        {data.year_of_starting?(<div><DateRangeOutlinedIcon></DateRangeOutlinedIcon> {data.year_of_starting?data.year_of_starting:""}/{data.month_of_starting?data.month_of_starting:""} - {data.year_of_ending?data.year_of_ending:""}/{data.month_of_ending?data.month_of_ending:""}</div>):<div></div>} 
+                                        {profileData.company?(<div> <h4><b><WorkOutlineOutlinedIcon></WorkOutlineOutlinedIcon> {profileData.company}</b></h4></div>):<div></div>} 
+                                        {profileData.title?(<div><PersonOutlinedIcon></PersonOutlinedIcon> {profileData.title}</div>):<div></div>} 
+                                        {profileData.location?(<div><LocationOnOutlinedIcon></LocationOnOutlinedIcon> {profileData.location}</div>):<div></div>} 
+                                        {profileData.year_of_starting?(<div><DateRangeOutlinedIcon></DateRangeOutlinedIcon> {profileData.year_of_starting?profileData.year_of_starting:""}/{profileData.month_of_starting?profileData.month_of_starting:""} - {profileData.year_of_ending?profileData.year_of_ending:""}/{profileData.month_of_ending?profileData.month_of_ending:""}</div>):<div></div>} 
 
                                         
                                             <hr/>
-                                            </div>)
-                                    })}
+                                            </div>
+                                            {/* ) */}
+                                    {/* })} */}
 
                                 </CardContent>
                             </Card>
@@ -395,7 +396,7 @@ class ViewProfile extends Component {
                                         </div>
 
                                     </div>
-                                    {profileData.mobile?(<div><PhoneOutlinedIcon></PhoneOutlinedIcon> {profileData.mobile}</div>):<div></div>} 
+                                    <div><PhoneOutlinedIcon></PhoneOutlinedIcon> 6692209383</div>
                                     {profileData.email?(<div><EmailOutlinedIcon></EmailOutlinedIcon> {profileData.email}</div>):<div></div>} 
                                    
                                     {/* {this.state.mobile?(<div><PhoneOutlinedIcon></PhoneOutlinedIcon> {this.state.mobile}</div>):<div></div>} 
@@ -414,7 +415,7 @@ class ViewProfile extends Component {
 
         return (
             <div>
-                {k}
+                {/* {k} */}
                 {renderRedirect}
             </div>
         )
@@ -422,23 +423,24 @@ class ViewProfile extends Component {
     }
 }
 // export default ViewProfile;
-const mapStateToProps = state => {
-    console.log(state.studData)
-    console.log(state.redirectToMessages)
+// const mapStateToProps = state => {
+//     console.log(state.studData)
+//     console.log(state.redirectToMessages)
     
-    return {
+//     return {
 
-        profileData:state.studData,
-        redirectToMessages:state.redirectToMessages
+//         profileData:state.studData,
+//         redirectToMessages:state.redirectToMessages
 
-    };
-  };
+//     };
+//   };
   
-  function mapDispatchToProps(dispatch) {
-    return {
-      viewStudentProfile: payload => dispatch(viewStudentProfile(payload)),
-      sendmessage: payload => dispatch(sendmessage(payload))
-    };
-  }
+//   function mapDispatchToProps(dispatch) {
+//     return {
+//       viewStudentProfile: payload => dispatch(viewStudentProfile(payload)),
+//       sendmessage: payload => dispatch(sendmessage(payload))
+//     };
+//   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(ViewProfile);
+//   export default connect(mapStateToProps, mapDispatchToProps)(ViewProfile);
+export default withApollo(ViewProfile)

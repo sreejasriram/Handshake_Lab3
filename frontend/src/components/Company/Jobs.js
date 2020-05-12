@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import '../../App.css';
-import axios from 'axios';
 import {Redirect} from 'react-router';
-import { makeStyles } from '@material-ui/core/styles';
-import {environment} from '../../Utils/constants';
-import { connect } from "react-redux";
-import { postCompanyJobs } from "../../redux/actions/index";
+import { withApollo } from 'react-apollo';
+
+import { addJob } from '../../mutation/mutations'
 
 class Jobs extends Component{
     constructor(props){
@@ -44,27 +42,53 @@ class Jobs extends Component{
     }
 
 
-    postJobs = (e) => {
+    postJobs = async(e) => {
         var headers = new Headers();
         e.preventDefault();
-        let cmpny_id = sessionStorage.getItem('id');
-        console.log(cmpny_id)
-        const data = {
-            title : this.state.title,
-            posting_date: this.state.posting_date,
-            deadline : this.state.deadline,
-            location: this.state.location,
-            salary: this.state.salary,
-            description : this.state.description,
-            category: this.state.category,
-            companyId: cmpny_id
+        // let cmpny_id = sessionStorage.getItem('companyId');
+        // console.log(cmpny_id)
+        // const data = {
+        //     title : this.state.title,
+        //     posting_date: this.state.posting_date,
+        //     deadline : this.state.deadline,
+        //     location: this.state.location,
+        //     salary: this.state.salary,
+        //     description : this.state.description,
+        //     category: this.state.category,
+        //     companyId: cmpny_id
 
+        // }
+
+        let res = await this.props.client.mutate({
+            mutation: addJob,
+            variables: {
+                title : this.state.title,
+                posting_date: this.state.posting_date,
+                deadline : this.state.deadline,
+                location: this.state.location,
+                salary: this.state.salary,
+                description : this.state.description,
+                category: this.state.category,
+                companyId: sessionStorage.getItem("companyId")
+            }
+        })
+        let response = res.data.addJob;
+
+        console.log(response)  
+            if (response) {
+                this.setState({
+                added: true
+                })
+                
+            } else {
+                this.setState({
+                added: false
+                })
         }
 
-        console.log(data)  
         // axios.defaults.withCredentials = true;       
         console.log("in frontend before axios");
-        this.props.postCompanyJobs(data);
+        // this.props.postCompanyJobs(data);
         // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
 
         // axios.post(environment.baseUrl+'/company/post_job',data)
@@ -88,7 +112,8 @@ class Jobs extends Component{
 
     render(){
         let redirectVar = null;
-       if (this.props.added==true || this.state.canceled==true){
+        
+       if (this.state.added==true || this.state.canceled==true){
         redirectVar = <Redirect to= "/home"/>
        }
         return(
@@ -141,18 +166,19 @@ class Jobs extends Component{
         )
     }
 }
+export default withApollo(Jobs)
 // export default Jobs;
-const mapStateToProps = state => {    
-    return {
-        added:state.jobposted
+// const mapStateToProps = state => {    
+//     return {
+//         added:state.jobposted
 
-    };
-  };
+//     };
+//   };
   
-  function mapDispatchToProps(dispatch) {
-    return {
-        postCompanyJobs: payload => dispatch(postCompanyJobs(payload))
-    };
-  }
+//   function mapDispatchToProps(dispatch) {
+//     return {
+//         postCompanyJobs: payload => dispatch(postCompanyJobs(payload))
+//     };
+//   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Jobs);
+//   export default connect(mapStateToProps, mapDispatchToProps)(Jobs);

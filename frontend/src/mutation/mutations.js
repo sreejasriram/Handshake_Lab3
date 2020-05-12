@@ -22,23 +22,22 @@ mutation addJob(
             title,posting_date,deadline,location,salary,description,category
    }
    
- } 
+}
 `;
+
 const addCompany = gql`
 mutation addCompany(
     $name:String,
     $email:String,
     $password:String,
-    $location:String,
-    $description:String
+    $location:String
 ){
     addCompany(
     name: $name
      email: $email,
      password: $password,
-     location: $location,
-     description: $description){
-     email,location,description,name}
+     location: $location){
+     _id,email,location,name
    
  }}
  
@@ -47,13 +46,11 @@ mutation addCompany(
 const updateCompany = gql`
 mutation updateCompany(
     $name:String,
-    $email:String,
     $location:String,
     $description:String,
     $company_id:String){
     updateCompany(
         name: $name,
-        email: $email,
         company_id: $company_id,
         location: $location,
         description: $description){
@@ -77,7 +74,7 @@ mutation addStudent(
         password: $password,
         college: $college)
         {
-            name,email,college
+            _id,name,email,college
         }  
         
 }
@@ -141,9 +138,26 @@ mutation updateStudent(
     }
 `;
 
+const companyLogin = gql`
+mutation companyLogin($email:String,$password:String){
+    companyLogin(email:$email,password:$password){
+      _id
+    }
+  }
+  
+`;
+
+const studentLogin = gql`
+mutation studentLogin($email:String,$password:String){
+    studentLogin(email:$email,password:$password){
+      _id
+    }
+  }
+  
+`;
 
 const updateStudentEducation = gql`
-mutation (
+mutation 
     updateStudentEducation( 
         $degree:String,
         $id:String
@@ -206,4 +220,4 @@ mutation changeJobStatus(
  
 `;
 
-export {changeJobStatus,applyJob,addJob,addCompany,updateCompany,addStudent,updateStudentCareer,updateStudentBasic,updateStudentEducation,updateStudentExperience};
+export {changeJobStatus,applyJob,addJob,addCompany,updateCompany,addStudent,updateStudentCareer,updateStudentBasic,updateStudentEducation,updateStudentExperience,companyLogin,studentLogin};

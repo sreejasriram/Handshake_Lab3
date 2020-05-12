@@ -1,9 +1,15 @@
 const query = require('../Database/queries');
 var ObjectId = require('mongodb').ObjectID;
 const Students = require('../Models/StudentModel');
+const passwordHash = require('password-hash');
 
 const addStudent = async (student_details) => {
     console.log(student_details)
+    let hashedPassword;
+    if (student_details.password)
+        hashedPassword = passwordHash.generate(student_details.password);
+
+    student_details.password = hashedPassword
     try {
         return await query.saveDocuments(Students.createModel(), student_details, { runValidators: false })
     }

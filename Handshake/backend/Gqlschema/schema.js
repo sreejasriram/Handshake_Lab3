@@ -9,7 +9,7 @@ const { ViewStudent, ViewAllStudents } = require('../queries/student');
 const { addStudent, updateStudent } = require('../mutations/student');
 
 const { addCompany, updateCompany } = require('../mutations/company');
-
+const { studentLogin, companyLogin} = require('../Mutations/login');
 
 const {
     GraphQLObjectType,
@@ -99,6 +99,12 @@ const StudentApplicationType = new GraphQLObjectType({
     })
 });
 
+const LoginType = new GraphQLObjectType({
+    name: 'login',
+    fields: () => ({
+        _id: { type: GraphQLID},
+    })
+})
 
 const EducationType = new GraphQLObjectType({
     name: 'education',
@@ -287,8 +293,7 @@ const Mutation = new GraphQLObjectType({
                 name: { type: GraphQLString },
                 email: { type: GraphQLString },
                 password: { type: GraphQLString },
-                location: { type: GraphQLString },
-                description: { type: GraphQLString }
+                location: { type: GraphQLString }
             },
             async resolve(parent, args) {
                 console.log(args)
@@ -303,7 +308,6 @@ const Mutation = new GraphQLObjectType({
             type: CompanyType,
             args: {
                 name: { type: GraphQLString },
-                email: { type: GraphQLString },
                 location: { type: GraphQLString },
                 description: { type: GraphQLString },
                 company_id: { type: GraphQLString }
@@ -340,6 +344,27 @@ const Mutation = new GraphQLObjectType({
                 }
             }
         },
+        companyLogin: {
+            type: LoginType,
+            args: {
+                email: { type: GraphQLString },
+                password: { type: GraphQLString },
+            },
+            resolve(parent, args) {
+                return companyLogin(args);
+            }
+        
+    },
+    studentLogin: {
+        type: LoginType,
+        args: {
+            email: { type: GraphQLString },
+            password: { type: GraphQLString },
+        },
+        resolve(parent, args) {
+            return studentLogin(args);
+        }
+    },
         updateStudentEducation: {
             type: StudentType,
             args: {
