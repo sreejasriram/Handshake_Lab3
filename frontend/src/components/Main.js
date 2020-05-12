@@ -12,7 +12,7 @@ import Students from './Company/Students'
 // import PostEvents from './Company/postEvents';
 // import EditEvents from './Company/EditEvents';
 // import EditJobs from './Company/EditJobs';
-// import ViewApplicants from './Company/ViewApplicants'
+import ViewApplicants from './Company/ViewApplicants'
 // import ViewEventApplicants from './Company/ViewEventApplicants'
 import CmpyProfile from './Company/Profile';
 // import CmpyMessages from './Company/Messages';
@@ -26,13 +26,13 @@ import StudSignup from './Student/Signup';
 // import StudSkill from './Student/Skill';
 // import StudEducation from './Student/Education';
 // import StudExperience from './Student/Experience';
-// import StudJobs from './Student/Jobs';
-// import JobDetails from './Student/JobDetails';
+import StudJobs from './Student/Jobs';
+import JobDetails from './Student/JobDetails';
 // import EventDetails from './Student/EventDetails';
 // import companyDetails from './Student/ShowCompany';
 // import ViewRegisteredEvents from './Student/ViewRegisteredEvents';
 import HandshakeStudents from './Student/Students'
-// import StudApplications from './Student/Applications';
+import StudApplications from './Student/Applications';
 // import CompanyEvents from './Student/CompanyEvents';
 // import Messages from './Student/Messages';
 import StudViewProfile from './Student/ViewProfile'
@@ -61,21 +61,22 @@ class Main extends Component {
                <Route path="/ViewProfile/:stud_id" component={ViewProfile}/>
                <Route path="/HandshakeStudents/" component={HandshakeStudents}/>         
                <Route path="/StudViewProfile/:stud_id" component={StudViewProfile}/>
+               <Route path="/studJobs" component={StudJobs}/>
+               <Route path="/jobdetails" component={JobDetails}/>
+               <Route path="/ViewApplicants/:jobId" component={ViewApplicants}/>
+               <Route path="/applications" component={StudApplications}/>             
 
 
               {/*  
-               <Route path="/studJobs" component={StudJobs}/>
-               <Route path="/jobdetails" component={JobDetails}/>
+              
                <Route path="/eventdetails/:eventId" component={EventDetails}/>
                <Route path="/companydetails/:jobId" component={companyDetails}/>
                <Route path="/viewRegisteredEvents/" component={ViewRegisteredEvents}/>
-               <Route path="/applications" component={StudApplications}/>             
                
                <Route path="/events" component={CmpyEvents}/>
                <Route path="/postEvents" component={PostEvents}/>
                <Route path="/editEvents/:eventId" component={EditEvents}/>
                <Route path="/editJobs/:jobId" component={EditJobs}/>
-               <Route path="/ViewApplicants/:jobId" component={ViewApplicants}/>
                <Route path="/ViewEventApplicants/:eventId" component={ViewEventApplicants}/>
                <Route path="/companyMessages" component={CmpyMessages}/>
                

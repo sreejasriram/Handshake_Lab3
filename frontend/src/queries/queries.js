@@ -11,14 +11,14 @@ query jobs($companyId:String){
 const alljobs = gql`
 query alljobs{
     alljobs{
-      title, posting_date,description,companydetails{name}
+      _id,title, posting_date,description,location,companydetails{name}
     }
   }
 `;
 const jobdetails = gql`
 query jobdetails($jobId:String){
     jobdetails(jobId:$jobId){
-      title, posting_date,description,companydetails{name,email}
+      _id,title, posting_date,description,location,deadline,salary,category,applications{studentId},companydetails{_id,name,email}
     }
   }
 `;
@@ -73,7 +73,7 @@ query allStudents{
 const listAppliedJobs = gql`
 query listAppliedJobs($studentId:String){
     listAppliedJobs(studentId:$studentId){
-      _id,title,companydetails{name,email}
+      _id,title,salary,category,description,deadline,posting_date,companydetails{name,email,location},applications{status,_id,appliedDate}
     }
   }
   
