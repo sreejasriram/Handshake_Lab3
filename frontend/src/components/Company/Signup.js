@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import '../../App.css';
-import axios from 'axios';
-import {Redirect} from 'react-router';
-// import {environment} from '../../Utils/constants';
-import { graphql, compose, withApollo } from 'react-apollo';
-// import { addCompany } from '../../queries/queries';
+import {  withApollo } from 'react-apollo';
 import { addCompany } from '../../mutation/mutations';
 
 
@@ -29,12 +25,7 @@ class Signup extends Component{
     }
     submitSignup = async(e) => {
         e.preventDefault();
-        // const data = {
-        //     name : this.state.name,
-        //     email: this.state.email,
-        //     password : this.state.password,
-        //     location: this.state.location 
-        // }
+       
         let response = await this.props.client.mutate({
             mutation: addCompany,
             variables: {
@@ -45,13 +36,6 @@ class Signup extends Component{
             }
         })
         response = response.data.addCompany;
-
-        // axios.defaults.withCredentials = true;
-        // console.log("in frontend before axios");
-        // axios.post('/company/company_signup',data)
-            // .then(response => {
-              //  console.log("Status Code : ",response.status);
-
               console.log("in frontend after response");
 
               console.log(response)
@@ -68,16 +52,7 @@ class Signup extends Component{
               }
 
                 
-            // })
-            // .catch(
-            //     this.setState({
-            //         signed: false
-                
-            // }));
-          
-            
-
-            
+           
     }
 
     render(){
@@ -123,6 +98,5 @@ class Signup extends Component{
         )
     }
 }
-//export Login Component
-// export default Signup;
+
 export default withApollo(Signup)

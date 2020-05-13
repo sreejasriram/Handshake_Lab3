@@ -1,14 +1,8 @@
 import React, {Component} from 'react';
 import '../../App.css';
-import axios from 'axios';
-import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
-import { graphql, compose, withApollo } from 'react-apollo';
+import {  withApollo } from 'react-apollo';
 import { companyLogin } from '../../mutation/mutations';
-
-// import {environment} from '../../Utils/constants';
-// import { connect } from "react-redux";
-// import { companyLogin } from "../../redux/actions/index";
 const jwt_decode = require("jsonwebtoken");
 
 
@@ -27,12 +21,7 @@ class Login extends Component{
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
         this.submitLogin = this.submitLogin.bind(this);
     }
-    // componentWillMount(){
-    //     this.setState({
-    //         authFlag : false
-            
-    //     })
-    // }
+  
     inputChangeHandler = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -40,14 +29,8 @@ class Login extends Component{
     }
     submitLogin = async(e) => {
         e.preventDefault();
-        // axios.defaults.withCredentials = true;
         console.log("in frontend before axios");
-        // console.log(this.state.password)
-        // let data={
-        //     email:this.state.email,
-        //     password:this.state.password,
-        // }
-        // this.props.companyLogin(data);
+       
         let response = await this.props.client.mutate({
             mutation: companyLogin,
             variables: {
@@ -56,14 +39,13 @@ class Login extends Component{
             }
         })
         response = response.data.companyLogin;
-        // axios.get('/company/company_signin/'+this.state.email+"/"+this.state.password)
-        //     .then(response => {
+      
               console.log("in frontend after response");  
               if (response._id) {
                 sessionStorage.setItem("companyId",response._id)
-                // console.log(response.data.result);  
+               
                   this.setState({
-                    // token:response._id,
+                  
                     authFlag : true,
                     cred : false
                   })
@@ -73,23 +55,13 @@ class Login extends Component{
                     cred:true
                   })
               }                
-            // })
             
     }
 
     render(){
         let redirectVar=null;
         console.log("outside company")
-        // console.log(this.state.token)
-        // if (this.state.token) {
-            // sessionStorage.setItem("token", this.state.token);          
-            // var decoded = jwt_decode.decode(this.state.token.split(' ')[1]);
-            // sessionStorage.setItem("companyId", this.state.token);
-            // sessionStorage.setItem("username", decoded.username);
-            // console.log(decoded._id)
-            // console.log(decoded.username)
-            // redirectVar = <Redirect to="/home" />
-        // }
+        
 
         if(sessionStorage.getItem('companyId')){
             console.log("inside company")
@@ -132,26 +104,5 @@ class Login extends Component{
         )
     }
 }
-//export Login Component
-// export default Login;
-// const mapStateToProps = state => {
-//     console.log(state.authFlag)
-//     console.log(state.cred)
 
-
-//     return {
-//         authFlag:state.authFlag,
-//         cred:state.cred
-
-//     };
-
-// };
-
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         companyLogin: payload => dispatch(companyLogin(payload))
-//     };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Login);
 export default withApollo(Login)

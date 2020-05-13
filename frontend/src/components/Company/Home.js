@@ -67,34 +67,9 @@ class Home extends Component {
     }
 
     componentDidMount() {   
-        // const data = {
-        //     companyId: this.state.companyId
-        // }
-        // console.log(data)
+      
       this.fetchJobs()
-        // this.props.fetchCompanyJobs(data);
-
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.get(environment.baseUrl+'/company/getjobs/'+data.companyId)
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data.rows)
-        //         if (response.data.rows) {
-        //             this.setState({
-        //                 dataRetrieved: true,
-        //                 jobData: response.data.rows
-        //             });
-                  
-
-
-        //         } else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-
-        //         }
-
-
-        //     })
+       
     }
 
     fetchJobs=async()=>{
@@ -193,23 +168,5 @@ class Home extends Component {
         )
     }
 }
-// export default Home;
 export default withApollo(Home)
 
-// const mapStateToProps = state => {
-//     console.log(state.allCompanyJobs)
-    
-//     return {
-
-//         jobData:state.allCompanyJobs
-
-//     };
-//   };
-  
-//   function mapDispatchToProps(dispatch) {
-//     return {
-//       fetchCompanyJobs: payload => dispatch(fetchCompanyJobs(payload))
-//     };
-//   }
-  
-//   export default connect(mapStateToProps, mapDispatchToProps)(Home);

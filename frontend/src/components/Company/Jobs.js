@@ -45,19 +45,7 @@ class Jobs extends Component{
     postJobs = async(e) => {
         var headers = new Headers();
         e.preventDefault();
-        // let cmpny_id = sessionStorage.getItem('companyId');
-        // console.log(cmpny_id)
-        // const data = {
-        //     title : this.state.title,
-        //     posting_date: this.state.posting_date,
-        //     deadline : this.state.deadline,
-        //     location: this.state.location,
-        //     salary: this.state.salary,
-        //     description : this.state.description,
-        //     category: this.state.category,
-        //     companyId: cmpny_id
-
-        // }
+        
 
         let res = await this.props.client.mutate({
             mutation: addJob,
@@ -86,28 +74,8 @@ class Jobs extends Component{
                 })
         }
 
-        // axios.defaults.withCredentials = true;       
         console.log("in frontend before axios");
-        // this.props.postCompanyJobs(data);
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.post(environment.baseUrl+'/company/post_job',data)
-        //     .then(response => {
-        //       console.log("in frontend after response");
-        //       console.log("response" + response.data.result)
-        //       if (response.data.result) {
-        //           this.setState({
-        //             added: true
-        //           })
-                 
-        //       } else if (response.data.error) {
-        //           this.setState({
-        //             added: false
-        //           })
-        //       }
-                
-        //     })
-           
+             
     }
 
     render(){
@@ -167,18 +135,3 @@ class Jobs extends Component{
     }
 }
 export default withApollo(Jobs)
-// export default Jobs;
-// const mapStateToProps = state => {    
-//     return {
-//         added:state.jobposted
-
-//     };
-//   };
-  
-//   function mapDispatchToProps(dispatch) {
-//     return {
-//         postCompanyJobs: payload => dispatch(postCompanyJobs(payload))
-//     };
-//   }
-  
-//   export default connect(mapStateToProps, mapDispatchToProps)(Jobs);

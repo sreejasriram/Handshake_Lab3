@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import '../../App.css';
-import axios from 'axios';
 import { Redirect } from 'react-router';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -10,7 +9,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import MailOutlineOutlinedIcon from '@material-ui/icons/MailOutlineOutlined';
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
-// import {environment} from '../../Utils/constants';
 import emptyPic from '../../images/empty-profile-picture.png';
 import { Avatar } from '@material-ui/core';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
@@ -18,9 +16,6 @@ import { withApollo } from 'react-apollo';
 import { listApplicants } from '../../queries/queries';
 import { changeJobStatus } from '../../mutation/mutations';
 
-
-// import { connect } from "react-redux";
-// import { viewJobApplicants } from "../../redux/actions/index";
 
 class ViewApplicants extends Component {
     constructor(props) {
@@ -42,7 +37,6 @@ class ViewApplicants extends Component {
             emptyprofilepic: emptyPic
         }
         this.viewProfile = this.viewProfile.bind(this);
-        // this.previewResume = this.previewResume.bind(this);
         this.updateStatus = this.updateStatus.bind(this);
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
         this.fetchApplicants = this.fetchApplicants.bind(this);
@@ -55,18 +49,10 @@ class ViewApplicants extends Component {
         })
     }
 
-    // previewResume = (e) =>{
-    //     this.setState(currentState =>({
-    //         previewresume : !currentState.previewresume
-    //     }))
-    // }
+   
 
     updateStatus = async(studentId) => {
-        // let data ={
-        //     jobId:this.state.job_id,
-        //     studentId:studentId,
-        //     status:this.state.showStatus
-        // }
+       
         
         let res = await this.props.client.mutate({
             mutation: changeJobStatus,
@@ -77,11 +63,7 @@ class ViewApplicants extends Component {
             }
         })
         let response = res.data.changeJobStatus;
-        // console.log(response)
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.put('/company/updateStudentstatus', data)
-        //     .then(response => {
+       
                 console.log(response)
                 if (response){
                     this.setState({
@@ -95,16 +77,11 @@ class ViewApplicants extends Component {
                         statusUpdated:false
                     })
             }
-        // })
     }
   
     async fetchApplicants()
     {
-        // let cmpny_id = sessionStorage.getItem('id');
-        // const data = {
-        //     job_id:this.state.job_id
-        // }
-        // this.props.viewJobApplicants(data);
+       
         const { data } = await this.props.client.query({
             query: listApplicants,
             variables: {  jobId:this.state.job_id },
@@ -122,32 +99,12 @@ class ViewApplicants extends Component {
         console.log(data)
     }
           
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.get(environment.baseUrl+'/company/list_applicants/'+data.job_id)
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data.rows)
-        //         if (response.data.rows.length>0) {
-        //             this.setState({
-        //                 dataRetrieved: true,
-        //                 stuData: response.data.rows[0].listApplicants,
-        //                 applications:response.data.rows[0].applications
-        //                 // name: response.data.rows[0].name,
-        //                 // email: response.data.rows[0].email,
-        //                 // mobile: response.data.rows[0].mobile
-        //             });
-                  
-        //         } else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-        //         }
-        //     })
+      
 
 
     }
     viewProfile = (e) => {
         var headers = new Headers();
-        //prevent page from refresh
         console.log(e.target.value);
         this.setState({
             view_profile: true,
@@ -185,7 +142,6 @@ class ViewApplicants extends Component {
                     <div class="login-form">
                         <div class="main-div">
                             <div class="panel">
-                                {/* <h2>Students Applied </h2> */}
                             </div>
                             <div>
                                 {renderRedirect}
@@ -213,12 +169,9 @@ class ViewApplicants extends Component {
                                                         </ Typography>                                               
                                                             </div>
                                                     </div><br/>
-                                                    {/* < Typography color="black" gutterBottom> */}
-                                                    {/* <b><p style={{ fontSize: '24px' }}>{data.name}</p></b></ Typography> */}
-                                                    {/* <img src = {data.image} alt = 'Logo' height='70' width='70'/> */}
+                                              
                                                     {data.email?(<div><MailOutlineOutlinedIcon style={{ color: "#1569E0" }}></MailOutlineOutlinedIcon> {data.email}</div>):<div></div>}
-                                                    {/* {data.mobile?(<div><PhoneOutlinedIcon style={{ color: "#1569E0" }}></PhoneOutlinedIcon> {data.mobile}</div>):<div></div>}<br/> */}
-                                                {/* <p><PhoneOutlinedIcon></PhoneOutlinedIcon> {data.mobile}</p> */}
+                                                  
                                                 {applications.map((app, index) => {
                                                    console.log(app)
                                                        if (app.studentId===data._id){
@@ -228,7 +181,6 @@ class ViewApplicants extends Component {
                                                 {app.status?(<div><EqualizerIcon  style={{ color: "#1569E0" }}></EqualizerIcon> {app.status}</div>):<div></div>}
                                                
                                                
-                                                {/* <button class="btn btn-primary" onClick={()=>this.previewResume()} style={{background:"none",textDecoration:"underline",color:"blue",border:"none"}}>View Resume</button><br/> */}
                                                 </div>)
                                               
                                             }
@@ -293,22 +245,6 @@ class ViewApplicants extends Component {
         )
     }
 }
-// export default ViewApplicants;
-// const mapStateToProps = state => {
-//     console.log(state.jobapplicants)
-    
-//     return {
 
-//         stuData:state.jobapplicants
-
-//     };
-//   };
   
-//   function mapDispatchToProps(dispatch) {
-//     return {
-//         viewJobApplicants: payload => dispatch(viewJobApplicants(payload))
-//     };
-//   }
-  
-//   export default connect(mapStateToProps, mapDispatchToProps)(ViewApplicants);
 export default withApollo(ViewApplicants)
