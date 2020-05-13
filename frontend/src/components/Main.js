@@ -7,34 +7,15 @@ import CmpyJobs from './Company/Jobs';
 import CmpyHome from './Company/Home';
 import ViewProfile from './Company/ViewProfile'
 import Students from './Company/Students'
-
-// import CmpyEvents from './Company/Events';
-// import PostEvents from './Company/postEvents';
-// import EditEvents from './Company/EditEvents';
-// import EditJobs from './Company/EditJobs';
 import ViewApplicants from './Company/ViewApplicants'
-// import ViewEventApplicants from './Company/ViewEventApplicants'
 import CmpyProfile from './Company/Profile';
-// import CmpyMessages from './Company/Messages';
-
-
 import StudLogin from './Student/Login';
 import StudSignup from './Student/Signup';
 import StudProfile from './Student/Profile';
-// import StudBasic from './Student/Basic';
-// import StudContact from './Student/Contact';
-// import StudSkill from './Student/Skill';
-// import StudEducation from './Student/Education';
-// import StudExperience from './Student/Experience';
 import StudJobs from './Student/Jobs';
 import JobDetails from './Student/JobDetails';
-// import EventDetails from './Student/EventDetails';
-// import companyDetails from './Student/ShowCompany';
-// import ViewRegisteredEvents from './Student/ViewRegisteredEvents';
 import HandshakeStudents from './Student/Students'
 import StudApplications from './Student/Applications';
-// import CompanyEvents from './Student/CompanyEvents';
-// import Messages from './Student/Messages';
 import StudViewProfile from './Student/ViewProfile'
 
 
@@ -65,33 +46,7 @@ class Main extends Component {
                <Route path="/jobdetails" component={JobDetails}/>
                <Route path="/ViewApplicants/:jobId" component={ViewApplicants}/>
                <Route path="/applications" component={StudApplications}/>             
-               <Route path="/studprofile" component={StudProfile}/>
-
-
-              {/*  
-              
-               <Route path="/eventdetails/:eventId" component={EventDetails}/>
-               <Route path="/companydetails/:jobId" component={companyDetails}/>
-               <Route path="/viewRegisteredEvents/" component={ViewRegisteredEvents}/>
-               
-               <Route path="/events" component={CmpyEvents}/>
-               <Route path="/postEvents" component={PostEvents}/>
-               <Route path="/editEvents/:eventId" component={EditEvents}/>
-               <Route path="/editJobs/:jobId" component={EditJobs}/>
-               <Route path="/ViewEventApplicants/:eventId" component={ViewEventApplicants}/>
-               <Route path="/companyMessages" component={CmpyMessages}/>
-               
-
-               
-
-               
-                <Route path="/basic" component={StudBasic}/>
-                <Route path="/contact" component={StudContact}/>
-                <Route path="/skill" component={StudSkill}/>
-                <Route path="/education" component={StudEducation}/>
-                <Route path="/experience" component={StudExperience}/>
-                <Route path="/companyevents" component={CompanyEvents}/>
-                <Route path="/messages" component={Messages}/> */}   
+               <Route path="/studprofile" component={StudProfile}/> 
 
             </div>
         )

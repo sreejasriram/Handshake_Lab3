@@ -7,9 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import { withApollo } from 'react-apollo';
 
-// import {environment} from '../../Utils/constants';
-// import { connect } from "react-redux";
-// import { editSkill } from "../../redux/actions/index";
 
 
 class Skill extends Component {
@@ -67,25 +64,7 @@ class Skill extends Component {
             skills: this.state.skills
         }
         console.log(edit_data)
-        // this.props.editSkill(edit_data)
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.post(environment.baseUrl+'/student/student_skill_edited', edit_data)
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data.result)
-        //         if (response.data.result) {
-        //             this.setState({
-                        
-        //                 rerender: false,
-        //                 skills: response.data.result.skills
-
-        //             });
-        //         } else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-        //         }
-        //     }
-        //     )
+        
     }
 
 
@@ -143,19 +122,5 @@ class Skill extends Component {
 }
 
 
-// export default Skill;
-// const mapStateToProps = state => {
-//     return {
-       
 
-//     };
-// };
-
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         editSkill: payload => dispatch(editSkill(payload))
-//     };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Skill);
 export default withApollo(Skill)

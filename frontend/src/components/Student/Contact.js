@@ -8,8 +8,6 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import { withApollo } from 'react-apollo';
-// import { connect } from "react-redux";
-// import { editContact } from "../../redux/actions/index";
 
 
 
@@ -48,11 +46,8 @@ class Contact extends Component {
     componentWillReceiveProps(nextProps) {
             if (this.props.email!==nextProps.email)
             this.setState({ email:nextProps.email});
-            // if (this.props.mobile!==nextProps.mobile)
-            // this.setState({ mobile:nextProps.mobile});
+           
             if (nextProps.email) {
-
-            // if (nextProps.profile.email || nextProps.mobile) {
                 this.setState({redirect:false})}
         }
 
@@ -71,33 +66,12 @@ class Contact extends Component {
         }
         console.log(edit_data)
         this.props.editContact(edit_data)
-
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.post(environment.baseUrl+'/student/student_contact_edited', edit_data)
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data.result)
-        //         if (response.data.result) {
-        //             this.setState({
-                        
-        //                 rerender: false,
-        //                 email: response.data.result.email,
-        //                 mobile: response.data.result.mobile
-
-        //             });
-        //         } else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-        //         }
-        //     }
-        //     )
     }
 
 
     render() {
         let renderRedirect = null;
       
-            // if (this.state.redirect === true || (dob==undefined && city==undefined && state==undefined && country==undefined)) {
         if (this.state.redirect === true){
             renderRedirect = (
                 <div>
@@ -132,8 +106,7 @@ class Contact extends Component {
                                             <CreateOutlinedIcon onClick={this.editProfile} style={{ alignContent: 'right',height:"15px",width:"15px" }}></CreateOutlinedIcon>
                                             </div>
                                             </div>
-                                            {/* {this.state.mobile?(<div><PhoneOutlinedIcon></PhoneOutlinedIcon> {this.state.mobile}</div>):<div></div>}
-                                            {this.state.email?(<div><EmailOutlinedIcon></EmailOutlinedIcon> {this.state.email}</div>):<div></div>} */}
+                                            
                                             {this.state.mobile?(<div><PhoneOutlinedIcon></PhoneOutlinedIcon> {this.state.mobile}</div>):<div></div>}
                                             {this.state.email?(<div><EmailOutlinedIcon></EmailOutlinedIcon> {this.state.email}</div>):<div></div>}
                                         
@@ -150,19 +123,7 @@ class Contact extends Component {
         )
     }
 }
-// export default Contact;
-// const mapStateToProps = state => {
-//     return {
-//     };
-// };
 
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         editContact: payload => dispatch(editContact(payload))
-//     };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Contact);
 export default withApollo(Contact)
 
 

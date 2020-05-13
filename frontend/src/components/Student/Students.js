@@ -5,15 +5,12 @@ import { Redirect } from 'react-router';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-// import {environment} from '../../Utils/constants';
 import { withApollo } from 'react-apollo';
 import TablePagination from '@material-ui/core/TablePagination';
 import emptyPic from '../../images/empty-profile-picture.png';
 import { Avatar } from '@material-ui/core';
 import { allStudents } from '../../queries/queries';
 
-// import { connect } from "react-redux";
-// import { fetchStudents } from "../../redux/actions/index";
 
 class Students extends Component {
     constructor(props) {
@@ -70,30 +67,14 @@ class Students extends Component {
         })
     }
     componentDidMount() {
-        // this.props.fetchStudents();
       this.fetchAllStudents()
 
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.get(environment.baseUrl+'/company/list_all_students')
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data.rows)
-        //         if (response.data.rows) {
-        //             this.setState({
-        //                 dataRetrieved: true,
-        //                 stuData: response.data.rows
-        //             });
-        //         } else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-        //         }
-        //     })
+       
     }
 
     fetchAllStudents=async()=>{
     const { data } = await this.props.client.query({
         query: allStudents,
-        // variables: { companyId: sessionStorage.getItem("companyId") },
         fetchPolicy: 'no-cache'
     })
     console.log(data)
@@ -116,7 +97,6 @@ class Students extends Component {
         console.log(stuData)
         let namesearch = this.state.namesearch;
         let clgsearch = this.state.clgsearch;
-        // let skillsearch = this.state.skillsearch;
         let renderRedirect = null
         if (this.state.view_profile === true) {
             renderRedirect = <Redirect to={`/ViewProfile/${this.state.studId}`} />
@@ -125,7 +105,6 @@ class Students extends Component {
 
             if (namesearch.length > 0) {
                 stuData = stuData.filter((job) => {
-                    // return (job.title.indexOf(namesearch) > -1 || job.name.indexOf(namesearch) > -1)
                     return (job.name.indexOf(namesearch) > -1)
 
                 })
@@ -137,12 +116,7 @@ class Students extends Component {
                         return job.college.indexOf(clgsearch) > -1
                 })
             }
-            // if (skillsearch.length > 0) {
-            //     stuData = stuData.filter((job) => {
-            //         if (job.skills != null)
-            //             return job.skills.indexOf(skillsearch) > -1
-            //     })
-            // }
+          
             console.log(stuData)
 
         }
@@ -161,7 +135,6 @@ class Students extends Component {
                    <b><p style={{ fontSize: '24px' }}>Filter</p></b></ Typography>
                             <div><input type="text" name="namesearch" id="namesearch"  placeholder="student name" onChange={this.inputChangeHandler} /></div><br/>
                             <div><input type="text" name="clgsearch" id="clgsearch"  placeholder="student college" onChange={this.inputChangeHandler} /></div><br/>
-                            {/* <div><input type="text" name="skillsearch" id="skillsearch"  placeholder="student skill" onChange={this.inputChangeHandler} /></div> */}
                         </div>
                     </CardContent>
                 </Card>
@@ -169,7 +142,6 @@ class Students extends Component {
                 <div class="col-md-7">
                 {stuData?stuData.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((data, index) => {
 
-                {/* {stuData.map((data, index) => { */}
                     return (
                         <div key={data._id}>
                             <Card>
@@ -218,22 +190,5 @@ class Students extends Component {
         )
     }
 }
-// export default Students;
-// const mapStateToProps = state => {
-//     console.log(state.allStudents)
-    
-//     return {
 
-//         stuData:state.allStudents
-
-//     };
-//   };
-  
-//   function mapDispatchToProps(dispatch) {
-//     return {
-//       fetchStudents: payload => dispatch(fetchStudents(payload))
-//     };
-//   }
-  
-//   export default connect(mapStateToProps, mapDispatchToProps)(Students);
 export default withApollo(Students)

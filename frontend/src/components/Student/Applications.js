@@ -9,15 +9,12 @@ import EventAvailableOutlinedIcon from '@material-ui/icons/EventAvailableOutline
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 import BusinessOutlinedIcon from '@material-ui/icons/BusinessOutlined';
 import StudentNavbar from './StudentNavbar'
-// import {environment} from '../../Utils/constants';
 import TablePagination from '@material-ui/core/TablePagination';
 import emptyPic from '../../images/empty-profile-picture.png';
 import {Avatar} from '@material-ui/core';
 import { withApollo } from 'react-apollo';
 import { listAppliedJobs } from '../../queries/queries';
 import ViewApplicants from '../Company/ViewApplicants';
-// import { connect } from "react-redux";
-// import { fetchRegisteredJobs } from "../../redux/actions/index";
 
 
 class Applications extends Component {
@@ -68,38 +65,14 @@ console.log(data)
 
     }
     componentDidMount() {
-        // const data = {
-        //     studentId: sessionStorage.getItem('id')
-        // }
-        // console.log("before axios")
-        // console.log(sessionStorage.getItem('token'));
-        // this.props.fetchRegisteredJobs();
-        this.viewapplicants();
-
-
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-        // console.log(data.studentId)
-        // axios.get(environment.baseUrl+'/student/list_applied_jobs/'+sessionStorage.getItem('id'))
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data.rows)
-        //         if (response.data.rows) {
-        //             this.setState({
-        //                 dataRetrieved: true,
-        //                 jobData: response.data.rows
-        //             });
-        //         } else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-        //         }
-        //     })
+       
+        this.viewapplicants();   
     }
 
 
     render() {
         let logincookie= null
-        // if(!cookie.load('student')){
-        //     logincookie = <Redirect to= "/"/>
-        // }
+        
         let jobData = this.state.jobData;
         console.log(jobData)
         let navbar =  <StudentNavbar comp="jobapplications" />
@@ -118,7 +91,6 @@ console.log(data)
         }
         return (
             <div style={{backgroundColor:"#F7F7F7"}}>
-                {/* {logincookie} */}
                 {navbar}
                 <div class="row">
                 <div class="col-md-2"></div>
@@ -126,7 +98,6 @@ console.log(data)
                 <Card>
                 <CardContent>
                     <div>
-                    {/* <div style={{fontWeight:'550',fontSize:'16px',marginBottom:'20px'}}>Filters</div> */}
                     <div style={{fontWeight:'550',fontSize:'13px',padding:'16px'}}>Filter by Status</div>
                     <select id="status" name="status" style = {{width:"80%",fontSize:'13px',marginLeft:'16px'}} onChange={this.statusFilter} >
                         <option value="" disabled selected>+ Add Status</option>
@@ -145,7 +116,6 @@ console.log(data)
                     <div class="col-md-8">
                 {jobData?jobData.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((data, index) => {
 
-                // {jobData.map((data, index) => {
                     return (
                         <div key={data._id}>
                            <Card>
@@ -171,10 +141,7 @@ console.log(data)
                             </div> <div class="col-md-2" >
                             {data.applications?(<div><FlagOutlinedIcon fontSize="small" style={{ color: "#1569E0" }}></FlagOutlinedIcon> {data.applications[0].status}</div>):<div></div>} 
                             </div> </div>
-                            {/* <p><BusinessOutlinedIcon fontSize="small"></BusinessOutlinedIcon> {data.companydetails[0].name}</p>
-                            <p><LocationOnOutlinedIcon fontSize="small"></LocationOnOutlinedIcon> {data.companydetails[0].location}</p>
-                            <p><EventAvailableOutlinedIcon fontSize="small"></EventAvailableOutlinedIcon> {data.applications[0].appliedDate.substring(0,10)}</p>
-                            <p> <FlagOutlinedIcon fontSize="small"></FlagOutlinedIcon> {data.applications[0].status}</p> */}
+                           
                             </CardContent></Card>
                             <br /><br />
                         </div>
@@ -200,22 +167,5 @@ console.log(data)
         )
     }
 }
-// export default Applications;
-// const mapStateToProps = state => {
-//     console.log(state.registeredJobs)
-    
-//     return {
 
-//         jobData:state.registeredJobs
-
-//     };
-//   };
-  
-//   function mapDispatchToProps(dispatch) {
-//     return {
-//       fetchRegisteredJobs: payload => dispatch(fetchRegisteredJobs(payload))
-//     };
-//   }
-  
-//   export default connect(mapStateToProps, mapDispatchToProps)(Applications);
 export default withApollo(Applications)

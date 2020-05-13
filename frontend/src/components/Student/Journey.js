@@ -46,27 +46,24 @@ class Journey extends Component {
         })
     }
     componentWillReceiveProps(nextProps) {
-            if (this.props.career_objective!==nextProps.career_objective)
-            this.setState({ career_objective:nextProps.career_objective});
-          
-            if (nextProps.career_objective) {
-                this.setState({redirect:false})}
+        if (this.props.career_objective !== nextProps.career_objective)
+            this.setState({ career_objective: nextProps.career_objective });
 
-
-
+        if (nextProps.career_objective) {
+            this.setState({ redirect: false })
         }
-    saveProfile = async(e) => {
+
+
+
+    }
+    saveProfile = async (e) => {
         e.preventDefault();
         let stud_id = sessionStorage.getItem('studentId');
         this.setState({
-             redirect: false,
+            redirect: false,
             rerender: false
         })
-        // const edit_data = {
-        //     id: stud_id,
-        //     career_objective: this.state.career_objective
-        // }
-        // console.log(edit_data)
+
 
         let res = await this.props.client.mutate({
             mutation: updateStudentCareer,
@@ -79,7 +76,7 @@ class Journey extends Component {
         console.log(response)
         if (response) {
             this.setState({
-                
+
                 rerender: false,
                 career_objective: response.career_objective
 
@@ -88,46 +85,24 @@ class Journey extends Component {
             console.log(res.data)
         }
 
-        // this.props.editJourney(edit_data)
-
-
-
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.post(environment.baseUrl+'/student/student_journey_edited', edit_data)
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data.result)
-        //         if (response.data.result) {
-        //             this.setState({
-                        
-        //                 rerender: false,
-        //                 career_objective: response.data.result.career_objective
-
-        //             });
-        //         } else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-        //         }
-        //     }
-        //     )
     }
 
 
     render() {
         let renderRedirect = null;
-      
-        if (this.state.redirect === true){
+
+        if (this.state.redirect === true) {
             renderRedirect = (
                 <div>
                     <Card>
                         <CardContent>
-                        <Typography color="black" gutterBottom><b><p style={{ fontSize: '24px' }}>My Journey</p></b></Typography>
+                            <Typography color="black" gutterBottom><b><p style={{ fontSize: '24px' }}>My Journey</p></b></Typography>
                             <div style={{ width: '70%' }} class="form-group">
-                               <textarea  rows="4" cols="50" onChange={this.inputChangeHandler} type="text" class="form-control" name="career_objective" value={this.state.career_objective} placeholder="Type here.." />
+                                <textarea rows="4" cols="50" onChange={this.inputChangeHandler} type="text" class="form-control" name="career_objective" value={this.state.career_objective} placeholder="Type here.." />
 
                             </div>
                             <button onClick={this.saveProfile} class="btn btn-primary">save</button>&nbsp;
-                            <button onClick={this.cancel} class="btn btn-primary" style={{backgroundColor:"#F7F7F7",color:"black"}}>Cancel</button>
+                            <button onClick={this.cancel} class="btn btn-primary" style={{ backgroundColor: "#F7F7F7", color: "black" }}>Cancel</button>
                         </CardContent></Card><br /><br />
                 </div>
             );
@@ -135,28 +110,28 @@ class Journey extends Component {
 
         }
         else if (this.state.redirect === false || this.state.rerender === true) {
-                renderRedirect = 
-                            <div>
-                                    <Card>
-                                        <CardContent>
-                                        <div class="row">
-                                            <div class="col-md-10">
-                                            <Typography color="black" gutterBottom>
-                                                <b><p style={{ fontSize: '24px' }}>My Journey</p></b>
+            renderRedirect =
+                <div>
+                    <Card>
+                        <CardContent>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <Typography color="black" gutterBottom>
+                                        <b><p style={{ fontSize: '24px' }}>My Journey</p></b>
 
-                                            </Typography>
-                                            </div>
-                                            <div class="col-md-2">
-                                            <CreateOutlinedIcon onClick={this.editProfile} style={{ alignContent: 'right',height:"15px",width:"15px" }}></CreateOutlinedIcon>
-                                            </div>
-                                            </div>
-                                         <p>{this.state.career_objective?this.state.career_objective:""}</p>
-
-                                        </CardContent>
-                                    </Card>
-                                    <br /><br />
+                                    </Typography>
                                 </div>
-           
+                                <div class="col-md-2">
+                                    <CreateOutlinedIcon onClick={this.editProfile} style={{ alignContent: 'right', height: "15px", width: "15px" }}></CreateOutlinedIcon>
+                                </div>
+                            </div>
+                            <p>{this.state.career_objective ? this.state.career_objective : ""}</p>
+
+                        </CardContent>
+                    </Card>
+                    <br /><br />
+                </div>
+
         }
         return (
             <div>
@@ -167,20 +142,4 @@ class Journey extends Component {
 }
 
 
-
-// export default Journey;
-// const mapStateToProps = state => {
-//     return {
-       
-
-//     };
-// };
-
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         editJourney: payload => dispatch(editJourney(payload))
-//     };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Journey);
 export default withApollo(Journey)

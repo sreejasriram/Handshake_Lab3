@@ -12,11 +12,7 @@ import Journey from './Journey';
 import Profilepic from './Profilepic';
 import { withApollo } from 'react-apollo';
 import { student } from '../../queries/queries';
-// import cookie from 'react-cookies';
-// import {environment} from '../../Utils/constants';
 
-// import { connect } from "react-redux";
-// import { fetchProfile } from "../../redux/actions/index";
 
 
 
@@ -86,9 +82,7 @@ class Profile extends Component {
             state: data.student.state,
             country: data.student.country,
             career_objective: data.student.career_objective,
-            // mobile: data.student.mobile,
-            // skills: data.student.skills,
-            // image: response.data.rows.image,
+            
             
             education: data.student.education,
             experience: data.student.experience
@@ -100,59 +94,15 @@ class Profile extends Component {
 
    componentDidMount() {
 
-    // this.props.fetchProfile();
     this.fetchProfile()
         let stud_id = sessionStorage.getItem('id');
         console.log("inside did mount")
         console.log(stud_id)
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.get(environment.baseUrl+'/student/student_profile_info/'+stud_id)
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data.rows)
-        //         response.data.rows = response.data.rows[0]
-        //         console.log(response.data.rows)
-        //             if (response.data.rows) {
-        //                 console.log("aaa")
-        //                 this.setState({
-        //                     dataRetrieved: true,
-        //                     profileData: response.data.rows,
-        //                     name: response.data.rows.name,
-        //                     email: response.data.rows.email,
-        //                     college: response.data.rows.college,
-        //                     dob: response.data.rows.dob,
-        //                     city: response.data.rows.city,
-        //                     state: response.data.rows.state,
-        //                     country: response.data.rows.country,
-        //                     career_objective: response.data.rows.career_objective,
-        //                     mobile: response.data.rows.mobile,
-        //                     skills: response.data.rows.skills,
-        //                     image: response.data.rows.image,
-                            
-        //                     education: response.data.rows.education,
-        //                     experience: response.data.rows.experience
-        //                 });
-        //                 if (response.data.rows.dob){
-        //                     this.setState({
-        //                     dob: response.data.rows.dob.substring(0,10)})
-        //                 }
-             
-
-        //             } 
-                
-        //         else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-        //         }
-        //     })
+        
     }
 
     render() {
-        // let logincookie = null
        
-        // if (!cookie.load('student')) {
-        //     logincookie = <Redirect to="/" />
-        // }
 
         let basic_props = {
             dob: this.state.dob,
@@ -175,7 +125,6 @@ class Profile extends Component {
                 college: this.state.college,
                 degree: this.state.degree,
                 major:this.state.major,
-                // image:this.state.image
         }
 
         let education_props={
@@ -188,7 +137,6 @@ class Profile extends Component {
       
         return (
             <div style={{ backgroundColor: "#F7F7F7" }}>
-                {/* {logincookie} */}
                 <div class="row">
                     <div class="col-md-1"> </div>
                     <div class="col-md-3"> 
@@ -197,20 +145,14 @@ class Profile extends Component {
                         <Skill {...skill_props}/>
                          <Contact {...contact_props}/>
 
-                        {/* <Profilepic  profile= {this.props.profileData}/>
-                        <Basic profile= {this.props.profileData}/>   
-                        <Skill profile= {this.props.profileData}/>
-                        <Contact profile= {this.props.profileData}/> */}
+                       
                     </div>
                     <div class="col-md-7">
                         <Journey {...journey_props}/>
                         <Education {...education_props}/>
                         <Experience {...experience_props}/> 
 
-                        {/* <Journey profile= {this.props.profileData}/> 
-                        <Education profile= {this.props.profileData}/>
-                        <Experience profile= {this.props.profileData}/>  */}
-                      
+                        
                     </div>
                     <div class="col-md-1"> </div>
                 </div>
@@ -218,22 +160,6 @@ class Profile extends Component {
         )
     }
 }
-// export default Profile;
-// const mapStateToProps = state => {
-//     console.log(state.profileData)
-    
-//     return {
 
-//     profileData:state.profileData
-
-//     };
-//   };
   
-//   function mapDispatchToProps(dispatch) {
-//     return {
-//       fetchProfile: payload => dispatch(fetchProfile(payload))
-//     };
-//   }
-  
-//   export default connect(mapStateToProps, mapDispatchToProps)(Profile);
 export default withApollo(Profile)

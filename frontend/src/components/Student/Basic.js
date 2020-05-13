@@ -9,9 +9,7 @@ import CakeOutlinedIcon from '@material-ui/icons/CakeOutlined';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import { withApollo } from 'react-apollo';
 import { updateStudentBasic } from '../../mutation/mutations';
-// import {environment} from '../../Utils/constants';
-// import { connect } from "react-redux";
-// import { editBasic } from "../../redux/actions/index";
+
 
 class Basic extends Component {
     constructor(props) {
@@ -97,47 +95,17 @@ class Basic extends Component {
         } else {
             console.log(res.data)
         }
-        // const edit_data = {
-        //     id: stud_id,
-        //     dob: this.state.dob,
-        //     city: this.state.city,
-        //     state: this.state.state,
-        //     country: this.state.country
-        // }
-        // console.log(edit_data)
-        // this.props.editBasic(edit_data)
+     
 
 
 
-
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.post(environment.baseUrl+'/student/student_basic_edited', edit_data)
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data.result)
-        //         if (response.data.result) {
-        //             this.setState({
-                        
-        //                 rerender: false,
-        //                 dob: response.data.result.dob,
-        //                 city: response.data.result.city,
-        //                 state: response.data.result.state,
-        //                 country: response.data.result.country
-
-        //             });
-        //         } else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-        //         }
-        //     }
-        //     )
+        
     }
 
 
     render() {
         let renderRedirect = null;
       
-            // if (this.state.redirect === true || (dob==undefined && city==undefined && state==undefined && country==undefined)) {
         if (this.state.redirect === true){
             renderRedirect = (
                 <div>
@@ -191,19 +159,4 @@ class Basic extends Component {
     }
 }
 
-// export default Basic;
-// const mapStateToProps = state => {
-//     return {
-       
-
-//     };
-// };
-
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         editBasic: payload => dispatch(editBasic(payload))
-//     };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Basic);
 export default withApollo(Basic)

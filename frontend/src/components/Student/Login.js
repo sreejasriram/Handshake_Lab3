@@ -6,10 +6,6 @@ import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
 import { withApollo } from 'react-apollo';
 import { studentLogin } from '../../mutation/mutations';
-
-// import {environment} from '../../Utils/constants';
-// import { connect } from "react-redux";
-// import { editContact } from "../../redux/actions/index";
 const jwt_decode = require("jsonwebtoken");
 
 
@@ -33,24 +29,11 @@ class Login extends Component{
             [e.target.name]: e.target.value
         })
     }
-    // componentWillMount(){
-    //     this.setState({
-    //         authFlag : false
-            
-    //     })
-    // }
+  
       submitLogin = async(e) => {
         var headers = new Headers();
         e.preventDefault();
-        // const data = {
-        //     email : this.state.email,
-        //     password : this.state.password
-        // }
-        // axios.defaults.withCredentials = true;
-        // console.log("in frontend before axios");
-        // console.log(data)
-        // axios.get('/student/student_signin/'+this.state.email+"/"+this.state.password)
-        //     .then(response => {
+       
             let response = await this.props.client.mutate({
                 mutation: studentLogin,
                 variables: {
@@ -65,11 +48,8 @@ class Login extends Component{
                   console.log("aaaaa")
                 sessionStorage.setItem("studentId",response._id)
 
-                //   sessionStorage.setItem('id', response.data.result);
-                //   let stud_id = sessionStorage.getItem('id');
-                //   console.log(stud_id)
+                
                   this.setState({
-                    // token:response._id,
                     authFlag : true,
                     cred : false
                   })
@@ -87,18 +67,7 @@ class Login extends Component{
         let credvalue = null;
         let redirectVar = null
 
-        // console.log(this.state.token)
-        // if (this.state.token.length > 0) {
-            // sessionStorage.setItem("token", this.state.token);
-
-            // var decoded = jwt_decode.decode(this.state.token.split(' ')[1]);
-
-            // console.log(decoded.payload)
-            // sessionStorage.setItem("id", this.state.token);
-            // sessionStorage.setItem("username", decoded.username);
-            // console.log(decoded._id)
-            // console.log(decoded.username)
-        // }
+       
 
 console.log(this.state.cred)
         if( sessionStorage.getItem('studentId')){
@@ -132,5 +101,4 @@ console.log(this.state.cred)
         )
     }
 }
-// export default Login;
 export default withApollo(Login)

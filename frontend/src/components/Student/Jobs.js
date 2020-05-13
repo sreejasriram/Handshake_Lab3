@@ -14,8 +14,6 @@ import { Dropdown } from 'react-bootstrap'
 import { withApollo } from 'react-apollo';
 import { alljobs } from '../../queries/queries';
 
-// import { connect } from "react-redux";
-// import { fetchJobs } from "../../redux/actions/index";
 
 class Jobs extends Component {
     constructor(props) {
@@ -179,32 +177,15 @@ class Jobs extends Component {
 
 
 
-    ////////////////////////////////
 
     componentDidMount() {
-        // this.props.fetchJobs();
-this.fetchJobs();
-        // axios.defaults.headers.common['authorization'] = sessionStorage.getItem('token');
-
-        // axios.get(environment.baseUrl+'/student/all_jobs_retrieve')
-        //     .then(response => {
-        //         console.log("in frontend after response");
-        //         console.log(response.data.rows)
-        //         if (response.data.rows) {
-        //             this.setState({
-        //                 dataRetrieved: true,
-        //                 jobData: response.data.rows
-        //             });
-        //         } else if (response.data.error) {
-        //             console.log("response" + response.data.error)
-        //         }
-        //     })
+            this.fetchJobs();
+       
     }
 
     fetchJobs=async()=>{
         const { data } = await this.props.client.query({
             query: alljobs,
-            // variables: { companyId: sessionStorage.getItem("companyId") },
             fetchPolicy: 'no-cache'
         })
         console.log(data)
@@ -234,9 +215,7 @@ this.fetchJobs();
         let locsearch = this.state.locsearch;
         let renderDetails = null
         let logincookie= null
-        // if(!sessionStorage.getItem('studentId')){
-        //     logincookie = <Redirect to= "/"/>
-        // }
+      
         let navbar =  <StudentNavbar comp="jobsearch" />
        
             console.log("details called with jobid")
@@ -305,7 +284,6 @@ this.fetchJobs();
                         <Card>
                             <CardContent>
 
-                                {/* //////////////////////// */}
 
                                 <div class='row' style={{width:'315px'}}>
                                 <div class='col-md-4' style={{ position:'relative', top:'5px'}}>Jobs</div>
@@ -341,8 +319,7 @@ this.fetchJobs();
                                 }):""}
 
                 <div class="row">
-                        {/* <div class="col-md-4"></div> */}
-                        {/* <div class="col-md-4"> */}
+                       
                             <TablePagination
                                 rowsPerPageOptions={[4]}
                                 count={this.state.jobData.length}
@@ -350,8 +327,7 @@ this.fetchJobs();
                                 rowsPerPage={this.state.rowsPerPage}
                                 onChangePage={this.handleChangePage}
                             />
-                        {/* </div>   */}
-                        {/* <div class="col-md-4"></div> */}
+                     
                     </div>
                         </CardContent> </Card>
                         
@@ -373,22 +349,5 @@ this.fetchJobs();
                 )
             }
         }
-// export default Jobs;
-// const mapStateToProps = state => {
-//     console.log(state.allJobs)
-    
-//     return {
 
-//         jobData:state.allJobs
-
-//     };
-//   };
-  
-//   function mapDispatchToProps(dispatch) {
-//     return {
-//       fetchJobs: payload => dispatch(fetchJobs(payload))
-//     };
-//   }
-  
-//   export default connect(mapStateToProps, mapDispatchToProps)(Jobs);
   export default withApollo(Jobs)
