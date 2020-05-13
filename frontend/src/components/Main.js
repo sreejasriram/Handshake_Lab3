@@ -20,7 +20,7 @@ import CmpyProfile from './Company/Profile';
 
 import StudLogin from './Student/Login';
 import StudSignup from './Student/Signup';
-// import StudProfile from './Student/Profile';
+import StudProfile from './Student/Profile';
 // import StudBasic from './Student/Basic';
 // import StudContact from './Student/Contact';
 // import StudSkill from './Student/Skill';
@@ -65,6 +65,7 @@ class Main extends Component {
                <Route path="/jobdetails" component={JobDetails}/>
                <Route path="/ViewApplicants/:jobId" component={ViewApplicants}/>
                <Route path="/applications" component={StudApplications}/>             
+               <Route path="/studprofile" component={StudProfile}/>
 
 
               {/*  
@@ -84,7 +85,6 @@ class Main extends Component {
                
 
                
-                <Route path="/studprofile" component={StudProfile}/>
                 <Route path="/basic" component={StudBasic}/>
                 <Route path="/contact" component={StudContact}/>
                 <Route path="/skill" component={StudSkill}/>

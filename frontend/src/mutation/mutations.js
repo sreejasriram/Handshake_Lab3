@@ -110,14 +110,26 @@ mutation updateStudent(
                 name,email,college,dob,career_objective}
    
  }
+`;
+
+const updateStudentProfilepic = gql`
+mutation updateStudent( 
+    $name:String,
+    $id:String
+){
+    updateStudent( 
+            name:$name,
+            id:$id,
+            type:"profilePic"){
+                name,email,college,dob,career_objective}
+   
+ }
  
 `;
 
 const updateStudentBasic = gql`
 mutation updateStudent( 
-    $name:String,
-    $email:String,
-    $college:String,
+   
     $dob:String,
     $state:String,
     $city:String,
@@ -125,9 +137,6 @@ mutation updateStudent(
     $id:String){
 
     updateStudent( 
-        name:$name,
-        email:$email,
-        college:$college,
         dob:$dob
         state:$state,
         city:$city,
@@ -220,4 +229,4 @@ mutation changeJobStatus(
  
 `;
 
-export {changeJobStatus,applyJob,addJob,addCompany,updateCompany,addStudent,updateStudentCareer,updateStudentBasic,updateStudentEducation,updateStudentExperience,companyLogin,studentLogin};
+export {updateStudentProfilepic,changeJobStatus,applyJob,addJob,addCompany,updateCompany,addStudent,updateStudentCareer,updateStudentBasic,updateStudentEducation,updateStudentExperience,companyLogin,studentLogin};

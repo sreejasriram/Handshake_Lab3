@@ -38,7 +38,6 @@ const updateStudent = async (profile) => {
 
     else if (profile.type === "basic") {
         update_data = {
-            name: profile.name,
             dob: profile.dob,
             city: profile.city,
             state: profile.state,
@@ -53,7 +52,19 @@ const updateStudent = async (profile) => {
             return error
         }
     }
-
+    else if (profile.type === "profilePic") {
+        update_data = {
+            name: profile.name
+        }
+        console.log(update_data)
+        console.log(profile.id)
+        try {
+            return await query.updateField(Students.createModel(), { _id: ObjectId(profile.id) }, update_data)
+        }
+        catch (error) {
+            return error
+        }
+    }
     else if (profile.type === "education") {
         let update_data = {
             college_name: profile.college_name,
