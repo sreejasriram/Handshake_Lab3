@@ -4,9 +4,9 @@ import '../../App.css';
 import axios from 'axios';
 import { Redirect } from 'react-router';
 import Basic from './Basic';
-// import Education from './Education';
+import Education from './Education';
 import Skill from './Skill';
-// import Experience from './Experience';
+import Experience from './Experience';
 import Contact from './Contact';
 import Journey from './Journey';
 import Profilepic from './Profilepic';
@@ -204,8 +204,8 @@ class Profile extends Component {
                     </div>
                     <div class="col-md-7">
                         <Journey {...journey_props}/>
-                        {/* <Education {...education_props}/> */}
-                        {/* <Experience {...experience_props}/>  */}
+                        <Education {...education_props}/>
+                        <Experience {...experience_props}/> 
 
                         {/* <Journey profile= {this.props.profileData}/> 
                         <Education profile= {this.props.profileData}/>

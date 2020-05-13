@@ -169,14 +169,30 @@ const updateStudentEducation = gql`
 mutation 
     updateStudentEducation( 
         $degree:String,
+        $major:String,  
+        $college_name:String,
+        $location:String,
+        $cgpa:String,
+        $year_of_starting:Int,
+        $year_of_passing:Int,
+        $month_of_starting:Int,
+        $month_of_passing:Int,
         $id:String
 ){
     updateStudentEducation( 
         degree:$degree,
+        major:$major,  
+        college_name:$college_name,
+        location:$location,
+        cgpa:$cgpa,
+        year_of_starting:$year_of_starting,
+        year_of_passing:$year_of_passing,
+        month_of_starting:$month_of_starting,
+        month_of_passing:$month_of_passing,
         id:$id,
         type:"education"){
      name,email,college,dob,state,city,country,career_objective,
-     education{degree}}
+     education{_id,degree,major,college_name,location,cgpa,year_of_passing,year_of_starting,month_of_passing,month_of_starting}}
    
  }
  
@@ -185,15 +201,27 @@ const updateStudentExperience = gql`
 mutation updateStudentExperience(
     $company:String,
     $title:String,
+    $year_of_starting:Int,
+    $year_of_ending:Int,
+    $month_of_starting:Int,
+    $month_of_ending:Int,
+    $location: String,
+    $description: String,
     $id:String
 ){
     updateStudentExperience( 
     company:$company,
     title:$title,
+    year_of_starting:$year_of_starting,
+    year_of_ending:$year_of_ending,
+    month_of_starting:$month_of_starting,
+    month_of_ending:$month_of_ending,
+    location: $location,
+    description: $description,
     id:$id,
     type:"experience"){
      name,email,college,dob,state,city,country,career_objective,
-     education{degree},experience{company,title}}
+     education{degree},experience{company,title,year_of_starting,year_of_ending,month_of_starting,month_of_ending,_id,description,location}}
    
  }
  

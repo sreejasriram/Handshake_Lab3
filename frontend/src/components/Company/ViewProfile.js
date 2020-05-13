@@ -337,11 +337,11 @@ class ViewProfile extends Component {
 
                                         {/* return ( */}
                                             <div>
-                                        {profileData.college_name?(<div><b><SchoolRoundedIcon></SchoolRoundedIcon> {profileData.college_name}</b></div>):<div></div>} 
-                                        {profileData.degree?(<div><GradeOutlinedIcon></GradeOutlinedIcon> {profileData.degree}</div>):<div></div>} 
-                                        <div> {profileData.year_of_starting?profileData.year_of_starting:""}/{profileData.month_of_starting?profileData.month_of_starting:""}-{profileData.year_of_passing?profileData.year_of_passing:""}/{profileData.month_of_passing?profileData.month_of_passing:""}</div>
-                                        {profileData.major?(<div><b>Major in</b> {profileData.major}</div>):<div></div>} 
-                                        {profileData.cgpa?(<div><b>Cummulative GPA</b> {profileData.cgpa}</div>):<div></div>} 
+                                        {profileData.education?(<div><b><SchoolRoundedIcon></SchoolRoundedIcon> {profileData.education.college_name}</b></div>):<div></div>} 
+                                        {profileData.education?(<div><GradeOutlinedIcon></GradeOutlinedIcon> {profileData.education.degree}</div>):<div></div>} 
+                                        <div> {profileData.education?profileData.education.year_of_starting:""}/{profileData.education?profileData.education.month_of_starting:""}-{profileData.education?profileData.education.year_of_passing:""}/{profileData.education?profileData.education.month_of_passing:""}</div>
+                                        {profileData.education?(<div><b>Major in</b> {profileData.education.major}</div>):<div></div>} 
+                                        {profileData.education?(<div><b>Cummulative GPA</b> {profileData.education.cgpa}</div>):<div></div>} 
 
                                         
                                             <hr/>
@@ -370,10 +370,10 @@ class ViewProfile extends Component {
 
                                         {/* return ( */}
                                             <div>
-                                        {profileData.company?(<div> <h4><b><WorkOutlineOutlinedIcon></WorkOutlineOutlinedIcon> {profileData.company}</b></h4></div>):<div></div>} 
-                                        {profileData.title?(<div><PersonOutlinedIcon></PersonOutlinedIcon> {profileData.title}</div>):<div></div>} 
-                                        {profileData.location?(<div><LocationOnOutlinedIcon></LocationOnOutlinedIcon> {profileData.location}</div>):<div></div>} 
-                                        {profileData.year_of_starting?(<div><DateRangeOutlinedIcon></DateRangeOutlinedIcon> {profileData.year_of_starting?profileData.year_of_starting:""}/{profileData.month_of_starting?profileData.month_of_starting:""} - {profileData.year_of_ending?profileData.year_of_ending:""}/{profileData.month_of_ending?profileData.month_of_ending:""}</div>):<div></div>} 
+                                        {profileData.experience?(<div> <h4><b><WorkOutlineOutlinedIcon></WorkOutlineOutlinedIcon> {profileData.experience.company}</b></h4></div>):<div></div>} 
+                                        {profileData.experience?(<div><PersonOutlinedIcon></PersonOutlinedIcon> {profileData.experience.title}</div>):<div></div>} 
+                                        {profileData.experience?(<div><LocationOnOutlinedIcon></LocationOnOutlinedIcon> {profileData.experience.location}</div>):<div></div>} 
+                                        {profileData.experience?(<div><DateRangeOutlinedIcon></DateRangeOutlinedIcon> {profileData.experience?profileData.experience.year_of_starting:""}/{profileData.experience?profileData.experience.month_of_starting:""} - {profileData.experience?profileData.experience.year_of_ending:""}/{profileData.experience?profileData.experience.month_of_ending:""}</div>):<div></div>} 
 
                                         
                                             <hr/>
